@@ -7,10 +7,15 @@
 		{% load static %}
 		<link rel="stylesheet" href="{% static 'css/bootstrap_5.3.3.min.css' %}" />
 		<link
+			rel="stylesheet"
+			href="{% static 'css/swiper-bundle_11.1.1.min.css' %}"
+		/>
+		<link
 			rel="shortcut icon"
 			type="image/png"
 			href="{% static 'favicon.ico' %}"
 		/>
+		{% block libraryCSS %}{% endblock %}
 	</head>
 	<body>
 		<div class="bg-body-secondary">
@@ -153,7 +158,9 @@
 				</div>
 			</div>
 		</nav>
+
 		<div class="container">{% block content %} {% endblock %}</div>
+
 		<div class="bg-body-secondary p-2">
 			<div class="container">
 				<div class="row py-4">
@@ -193,13 +200,22 @@
 						<div style="font-weight: 600; padding: 8px 16px">DANH MỤC</div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link link-dark" href="#">Màn hình</a>
+								<a class="nav-link link-dark" href="#">Phụ kiện di động</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link link-dark" href="#">Tai nghe</a>
+								<a class="nav-link link-dark" href="#">Phụ kiện laptop</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link link-dark" href="#">Cáp sạc</a>
+								<a class="nav-link link-dark" href="#">Thiết bị chơi game</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Thiết bị mạng</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Thiết bị lưu trữ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Phụ kiện khác</a>
 							</li>
 						</ul>
 					</div>
@@ -288,14 +304,7 @@
 		<script src="{% static 'js/bootstrap_5.3.3.bundle.min.js' %}"></script>
 		<script src="{% static 'js/jquery_3.7.1.min.js' %}"></script>
 		<script src="{% static 'js/iconify-icon_2.1.0.min.js' %}"></script>
-		<script>
-			// var productDropdown = document.getElementById('product-dropdown');
-			// productDropdown.addEventListener("mouseenter", ()=> {
-			// 	productDropdown.querySelector(".dropdown-menu").classList.add("show");
-			// })
-			// productDropdown.addEventListener("mouseleave", ()=> {
-			// 	productDropdown.querySelector(".dropdown-menu").classList.remove("show");
-			// })
-		</script>
+		<script src="{% static 'js/swiper-bundle_11.1.1.min.js' %}"></script>
+		{% block libraryJS %}{% endblock %}
 	</body>
 </html>
