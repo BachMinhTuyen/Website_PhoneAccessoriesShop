@@ -1,0 +1,133 @@
+{% extends "pages/base.html" %} {% block title %}Chi tiết đơn hàng{% endblock %} {% block content %}
+<div class="m-3">
+	<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a class="link-underline link-underline-opacity-0" href="/">Trang chủ</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a class="link-underline link-underline-opacity-0" href="/user/receipt">Đơn hàng của bạn</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">Thông tin chi tiết đơn hàng</li>
+		</ol>
+	</nav>
+
+	<div class="row">
+		<div class="col-3">
+			<div class="list-group">
+				<a href="/user/" class="list-group-item list-group-item-action">Hồ sơ người dùng</a>
+				<a
+					href="/user/receipt/"
+					class="list-group-item list-group-item-action active"
+					aria-current="true"
+					>Đơn hàng của bạn</a
+				>
+			</div>
+		</div>
+		<div class="col-9">
+			<h2>Thông tin chi tiết đơn hàng</h2>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Ngày đặt hàng: <span class="text-primary">2024-05-18</span></li>
+				<li class="list-group-item">Phí vận chuyển: <span class="text-primary">15000</span></li>
+				<li class="list-group-item">
+					Phương thức vận chuyển: <span class="text-primary">Giao hàng nhanh</span>
+				</li>
+				<li class="list-group-item">
+					Phương thức thanh toán: <span class="text-primary">Tiền mặt</span>
+				</li>
+				<li class="list-group-item">
+					Trạng thái: <span class="text-danger fw-bold">Chờ xác nhận</span>
+				</li>
+			</ul>
+
+			<table class="table table-striped">
+				<thead>
+					<tr class="table-success">
+						<th scope="col" class="text-center text-capitalize">Hình ảnh</th>
+						<th scope="col" class="text-center text-capitalize">Tên sản phẩm</th>
+						<th scope="col" class="text-center text-capitalize">Đơn giá</th>
+						<th scope="col" class="text-center text-capitalize">Số lượng</th>
+						<th scope="col" class="text-center text-capitalize">Thành tiền</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							{% load static %}
+							<img
+								class="d-flex m-auto"
+								width="100"
+								src="{% static '/img/usb-kingston-datatraveler-exodia.png' %}"
+								alt="usb-kingston-datatraveler-exodia.png"
+							/>
+						</td>
+						<td>USB 3.2 Kingston DataTraveler Exodia DTX 64GB</td>
+						<td>65000</td>
+						<td>2</td>
+						<td>130000</td>
+					</tr>
+					<tr>
+						<td>
+							{% load static %}
+							<img
+								class="d-flex m-auto"
+								width="100"
+								src="{% static '/img/the-nho-sdhc-sandisk-32gb-class.png' %}"
+								alt="the-nho-sdhc-sandisk-32gb-class"
+							/>
+						</td>
+						<td>Thẻ nhớ SDHC SanDisk 32Gb Class 10 100MB/s</td>
+						<td>36000</td>
+						<td>1</td>
+						<td>36000</td>
+					</tr>
+					<tr class="table-secondary">
+						<td colspan="4" class="text-end fw-bolder">Tổng tiền:</td>
+						<td>166000</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="m-3">
+				<button
+					type="button"
+					class="btn btn-danger float-end"
+					data-bs-toggle="modal"
+					data-bs-target="#cancelOrder"
+				>
+					Hủy đơn hàng
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal cancel order -->
+	<div
+		class="modal fade"
+		id="cancelOrder"
+		tabindex="-1"
+		aria-labelledby="exampleModalLabel"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-danger">Cảnh báo</h5>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<p>Bạn có chắc chắc muốn hủy đơn hàng này?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Tôi chắc chắn</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

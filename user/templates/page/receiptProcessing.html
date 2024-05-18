@@ -1,0 +1,75 @@
+{% extends "pages/base.html" %} {% block title %}Đơn hàng của bạn{% endblock %} {% block content %}
+<div class="m-3">
+	<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a class="link-underline link-underline-opacity-0" href="/">Trang chủ</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">Đơn hàng của bạn</li>
+		</ol>
+	</nav>
+	<div class="row">
+		<div class="col-3">
+			<div class="list-group">
+				<a href="/user/" class="list-group-item list-group-item-action">Hồ sơ người dùng</a>
+				<a
+					href="/user/receipt/"
+					class="list-group-item list-group-item-action active"
+					aria-current="true"
+					>Đơn hàng của bạn</a
+				>
+			</div>
+		</div>
+		<div class="col-9">
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link" href="/user/receipt/">Chờ xác nhận</a>
+				</li>
+				<li class="nav-item">
+					<a
+						class="nav-link active bg-warning-subtle"
+						aria-current="page"
+						href="/user/receipt?status=processing"
+						>Chờ giao hàng</a
+					>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/user/receipt?status=completed">Đã giao hàng</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/user/receipt?status=cancel">Đã hủy</a>
+				</li>
+			</ul>
+			<table class="table table-striped">
+				<thead>
+					<tr class="table-warning">
+						<th scope="col" class="text-center text-capitalize">Ngày đặt hàng</th>
+						<th scope="col" class="text-center text-capitalize">Mã vận đơn</th>
+						<th scope="col" class="text-center text-capitalize">Tên sản phẩm</th>
+						<th scope="col" class="text-center text-capitalize">Tổng tiền</th>
+						<th scope="col" class="text-center text-capitalize">Thao tác</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>2024-05-18</td>
+						<td>123456</td>
+						<td>
+							<ul class="list-group">
+								<li class="list-group-item border-0">
+									USB 3.2 Kingston DataTraveler Exodia DTX 64GB
+								</li>
+								<li class="list-group-item border-0">Thẻ nhớ SDHC SanDisk 32Gb Class 10 100MB/s</li>
+							</ul>
+						</td>
+						<td>65000</td>
+						<td>
+							<a class="btn btn-primary" href="/user/receiptdetails/">Xem chi tiết</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

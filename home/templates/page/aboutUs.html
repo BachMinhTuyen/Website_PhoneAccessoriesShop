@@ -1,0 +1,70 @@
+{% extends "pages/base.html" %} {% block title %}Về chúng tôi{% endblock %} {% block content %}
+<div class="m-3">
+	<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="/">Trang chủ</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Về chúng tôi</li>
+		</ol>
+	</nav>
+	<table class="table table-striped">
+		<thead>
+			<tr class="table-success">
+				<th class="text-center" scope="col">Tiêu đề</th>
+				<th class="text-center" scope="col">Chi tiết</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th class="text-center text-primary">Tên đề tài</th>
+				<td>Xây dựng website cửa hàng mua bán phụ kiện điện thoại</td>
+			</tr>
+			<tr>
+				<th class="text-center text-primary">Học phần</th>
+				<td>Ngôn ngữ lập trình hiện đại</td>
+			</tr>
+			<tr>
+				<th class="text-center text-primary">Giảng viên hướng dẫn</th>
+				<td>Dương Thị Mộng Thùy</td>
+			</tr>
+			<tr>
+				<th class="text-center text-primary">Thành viên</th>
+				<td>
+                    <ul class="list-group">
+						<li class="list-group-item border-0">Bạch Minh Tuyên</li>
+						<li class="list-group-item border-0">Nguyễn Thị Xuân Lan</li>
+						<li class="list-group-item border-0">Vũ Ngọc Tuấn Tú</li>
+						<li class="list-group-item border-0">Trần Bảo Khoa</li>
+					</ul>
+                </td>
+			</tr>
+			<tr>
+				<th class="text-center text-primary">Ngôn ngữ lập trình sử dụng trong dự án</th>
+				<td>
+                    <ul class="list-group">
+						<li class="list-group-item border-0">Python (Django)</li>
+						<li class="list-group-item border-0">HTML, CSS, JS</li>
+						<li class="list-group-item border-0">Database: SQLite 3</li>
+					</ul>
+                </td>
+			</tr>
+			<tr>
+				<th class="text-center text-primary">Phần mềm, công cụ hỗ trợ phát triển website</th>
+				<td>
+                    <ul class="list-group">
+						<li class="list-group-item border-0">Visual Studio Code</li>
+					</ul>
+                </td>
+			</tr>
+			<tr>
+				<th class="text-center text-primary">Thư viện hỗ trợ</th>
+				<td>
+					<ul class="list-group">
+						<li class="list-group-item border-0">Bootstrap 5</li>
+						<li class="list-group-item border-0">SwiperJS</li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endblock %}
