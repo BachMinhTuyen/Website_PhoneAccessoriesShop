@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from account.models import Account, KhachHang
 
 # Create your views here.
 def profile(request):
-    return render(request, 'page/profile.html')
+    username = request.session['username']
+    taiKhoan = Account.objects.get(UserName=username)
+    khachHang = KhachHang.objects.get(UserName=username)
+    data = {
+        'acc' : taiKhoan,
+        'kh' : khachHang,
+    }
+    return render(request, 'page/profile.html', data)
 
 def receipt(request):
     status = request.GET.get('status')

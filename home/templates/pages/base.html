@@ -78,6 +78,17 @@
 									>
 								</a>
 							</div>
+							{% if request.session.username %}
+							<div class="list-inline-item me-4">
+								<a href="/user/" class="d-block text-secondary position-relative">
+									<iconify-icon
+										icon="solar:user-circle-outline"
+										width="30"
+										height="30"
+									></iconify-icon>
+								</a>
+							</div>
+							{% else %}
 							<div class="list-inline-item me-4">
 								<a href="/account/login/" class="d-block text-secondary position-relative">
 									<iconify-icon
@@ -87,6 +98,7 @@
 									></iconify-icon>
 								</a>
 							</div>
+							{% endif %}
 							<div class="list-inline-item me-4">
 								<a href="#" class="d-block text-secondary position-relative">
 									<iconify-icon
@@ -100,6 +112,7 @@
 									>
 								</a>
 							</div>
+							
 						</div>
 					</div>
 				</div>

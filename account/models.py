@@ -5,6 +5,7 @@ class Account(models.Model):
     UserName = models.CharField(max_length=100, primary_key=True)
     Password = models.CharField(max_length=100)
     Quyen = models.CharField(max_length=100)
+    last_login = models.DateTimeField(verbose_name='last login', blank=True, null=True)
 
 class NhanVien(models.Model):
     MaNV = models.CharField(max_length=100, primary_key=True)
