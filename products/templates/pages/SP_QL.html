@@ -1,0 +1,94 @@
+{% extends "pages/Layout_QL_SP.html" %} {% block title %}Trang chủ{% endblock %} {%block libraryCSS %}
+<!-- chuyển lại kiểu định dạng tiền tệ VN  -->
+<script>
+	function format_gia_tien(gia) {
+		var gia_str = String(gia);
+		if (gia_str.length <= 3) {
+			return gia_str;
+		}
+		var parts = [];
+		while (gia_str) {
+			parts.push(gia_str.slice(-3));
+			gia_str = gia_str.slice(0, -3);
+		}
+		return parts.reverse().join('.');
+	}
+</script>
+
+{% endblock %} 
+{% block main %}
+<!-- Swiper -->
+		
+		
+		<div class="table">
+			
+		</div>
+		<!-- <div class="card m-1"	 style="width: 18rem;">
+			<img src="/static/img/{{ sp.Anh }}" class="card-img-top" alt="{{sp.Anh}}">
+			<div class="card-body ">
+				<h5 class="card-title">{{sp.TenSP}}</h5>
+				
+				<p class="card-text">Giá: {{sp.GiaBan}}  VND</p>
+					
+			  </div>
+			  <div class="card-footer bg-body border-0">
+				<a href="/products/product/{{sp.id}}/" class="btn btn-primary">Xem chi tiết</a>
+			  </div>
+		  </div> -->
+		  
+		  	{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<div class="mt-5 alert alert-success alert-dismissible fade show" role="alert">
+					<strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		  <table class="table table-striped table-bordered">
+			<thead class="thead-dark">
+			  <tr>
+				<th scope="col">Tên sản phẩm</th>
+				<th scope="col">Giá</th>
+				<th scope="col">Ảnh</th>
+				<th scope="col"></th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for sp in DSSP %}
+			  <tr>
+				<td>{{sp.TenSP}}</td>
+				<td>{{sp.GiaBan}}</td>
+				<td>
+					<img src="/static/img/{{ sp.Anh }}" class="card-img-top" alt="{{sp.Anh}}">
+				</td>
+				<td><a href="/products/xemSP/{{sp.id}}">Xóa sản phẩm</a></td>
+				<td><a href="/products/updateSP/{{sp.id}}">Sửa sản phẩm</a></td>
+			  </tr>
+			  <tr>
+			{% endfor %}
+			</tbody>
+		  </table>
+		  <div class="pagination">
+			<span class="step-links">
+				{% if DSSP.has_previous %}
+					<a href="?page=1"> first</a>
+					<a href="?page={{ DSSP.previous_page_number }}"><strong> previous</strong></a>
+				{% endif %}
+	
+				<span class="current">
+					<h2>Page {{ DSSP.number }} of {{ DSSP.paginator.num_pages }}.</h2> 
+				</span>
+	
+				{% if DSSP.has_next %}
+					<a href="?page={{ DSSP.next_page_number }}"><strong> next</strong></a>
+					<a href="?page={{ DSSP.paginator.num_pages }}"><strong> last</strong></a>
+				{% endif %}
+			</span>
+		</div>
+{% endblock %} {% block libraryJS %}
+<!-- Initialize Swiper -->
+
+{% endblock %}
+

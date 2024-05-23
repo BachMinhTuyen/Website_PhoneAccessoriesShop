@@ -1,0 +1,83 @@
+{% extends "pages/Layout_SP.html" %}
+{%block content%}
+<script>
+	function format_gia_tien(gia) {
+		var gia_str = String(gia);
+		if (gia_str.length <= 3) {
+			return gia_str;
+		}
+		var parts = [];
+		while (gia_str) {
+			parts.push(gia_str.slice(-3));
+			gia_str = gia_str.slice(0, -3);
+		}
+		return parts.reverse().join('.');
+	}
+</script>
+<div class="row p-md-3">
+    <div class="col-7">
+      <!-- Cột 1 -->
+      <div class="row card">
+        <!-- Hàng 1 của cột 1 -->
+        <img src="/static/img/{{SP.Anh}}" alt="">
+      </div>
+      <!-- hàng 2 -->
+      <div class="row mt-1 p-1">
+            <div   class="col-3 card ">
+                <img src="/static/img/{{SP.Anh}}" alt="">
+            </div>
+            <div class="col-3 card">
+                <img src="/static/img/{{SP.Anh}}" alt="">
+            </div>
+            <div class="col-3 card">
+                <img src="/static/img/{{SP.Anh}}" alt="">
+            </div>
+            <div class="col-3 card">
+                <img src="/static/img/{{SP.Anh}}" alt="">
+            </div>
+      </div>
+      <!-- hàng 3 -->
+      <div class="row">
+        <!-- thông tin sản  phảm -->
+        <div class="col-12">
+          {{SP.Mota}}
+        </div>
+      </div>
+    </div>
+    <div class="col-5 ">
+      <!-- Cột 2 -->
+      <div class="row">
+        <!-- tên sản phẩm -->
+        <div class="col-12 d-flex">
+            <h1>{{SP.TenSP}}</h2>
+        </div>
+        <!-- Giá bán -->
+        <div>
+          <h2 class="text-danger"><span class="text-danger" id="gia_tien"></span> VND</h2>
+          <script>
+						var gia_tien = {{SP.GiaBan}}
+						document.getElementById("gia_tien").innerText = format_gia_tien(gia_tien)
+					</script>
+        </div>
+        <!-- thêm số lơngj sản phâmr mua -->
+        <div class="cart-item w-auto">
+          <span><h2>Số lượng
+            <input style="width: 30%;"  type="number" class=" quantity-input" value="1" min="1">
+          </h2></span>
+          
+      </div>
+        <!-- Nút vỏ hàng -->
+        <div class="row">
+          <button type="button" class="m-3 w-auto btn btn-primary btn-lg btn-shopping-cart">
+            <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+          </button>
+        </div>
+        
+        <!-- //THÔNG TIN nhà cùng cấp  -->
+        <div class="row">
+          Nhà cung cấp: {{NCC.TenNCC}} 
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock%}

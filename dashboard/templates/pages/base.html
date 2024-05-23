@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{% block title %} {% endblock %}</title>
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'css/bootstrap_5.3.3.min.css' %}" />
+		<link
+			rel="stylesheet"
+			href="{% static 'css/swiper-bundle_11.1.1.min.css' %}"
+		/>
+		<link
+			rel="shortcut icon"
+			type="image/png"
+			href="{% static 'favicon.ico' %}"
+		/>
+		{% block libraryCSS %}{% endblock %}
+	</head>
+	<body>
+		<div class="bg-body-secondary">
+			<div class="container">
+				<div class="row">
+					<div class="col-6">Chào mừng bạn đã đến với cửa hàng!</div>
+					<div class="col-6 text-end">
+						<select class="border-0 bg-body-secondary">
+							<option value="vn" selected>Vietnamese</option>
+							<option value="en">English</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="py-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-3">
+						<a
+							class="navbar-brand d-flex justify-content-center align-items-center"
+							href="#"
+						>
+							{% load static %}
+							<img
+								width="100"
+								src="{% static 'img/logo.jpg' %}"
+								alt="logo.jpg"
+							/>
+							<span style="font-weight: 500; font-size: 20px; margin-left: 12px"
+								>Phụ Kiện Điện Thoại</span
+							>
+						</a>
+					</div>
+					<div class="col-6 m-auto">
+						<form class="d-flex" role="search">
+							<input
+								class="form-control rounded border-success me-2"
+								type="search"
+								placeholder="Search for products"
+								aria-label="Search"
+							/>
+							<button class="btn btn-outline-secondary" type="submit">
+								Search
+							</button>
+						</form>
+					</div>
+					<div class="col-3 d-flex justify-content-end align-items-center">
+						<div class="list-inline">
+							<div class="list-inline-item me-4">
+								<a href="#" class="d-block text-secondary position-relative">
+									<iconify-icon
+										icon="solar:heart-outline"
+										width="30"
+										height="30"
+									></iconify-icon>
+									<span
+										class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+										>2</span
+									>
+								</a>
+							</div>
+							<div class="list-inline-item me-4">
+								<a href="/account/login/" class="d-block text-secondary position-relative">
+									<iconify-icon
+										icon="solar:user-circle-outline"
+										width="30"
+										height="30"
+									></iconify-icon>
+								</a>
+							</div>
+							<div class="list-inline-item me-4">
+								<a href="#" class="d-block text-secondary position-relative">
+									<iconify-icon
+										icon="solar:cart-4-outline"
+										width="30"
+										height="30"
+									></iconify-icon>
+									<span
+										class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+										>5</span
+									>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg bg-body-secondary">
+			<div class="container">
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li
+							class="nav-item px-2 border-end border-secondary border-opacity-25"
+						>
+							<a class="nav-link active" aria-current="page" href="/"
+								>Trang chủ</a
+							>
+						</li>
+						<li
+							class="nav-item px-2 border-end border-secondary border-opacity-25 dropdown"
+							id="product-dropdown"
+						>
+							<a
+								class="nav-link dropdown-toggle"
+								role="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								Sản phẩm
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Cáp, củ sạc</a></li>
+								<li><a class="dropdown-item" href="#">Bao da, ốp lưng</a></li>
+								<li><a class="dropdown-item" href="#">Pin dự phòng</a></li>
+							</ul>
+						</li>
+						<li
+							class="nav-item px-2 border-end border-secondary border-opacity-25"
+						>
+							<a class="nav-link" href="/aboutus/">Về chúng tôi</a>
+						</li>
+						<li class="nav-item px-2">
+							<a class="nav-link" href="/contact/">Liên hệ</a>
+						</li>
+					</ul>
+					<div class="d-flex">Holine: 1900 0000</div>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">{% block content %} {% endblock %}</div>
+
+		<div class="bg-body-secondary p-2">
+			<div class="container">
+				<div class="row py-4">
+					<div class="col">
+						<div style="font-weight: 600; padding: 8px 16px">
+							CHĂM SÓC KHÁCH HÀNG
+						</div>
+						<ul class="nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Trung tâm trợ giúp</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#"
+									>Phone Accessories Shop</a
+								>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Hướng dẫn mua hàng</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col">
+						<div style="font-weight: 600; padding: 8px 16px">GIỚI THIỆU</div>
+						<ul class="nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Giới thiệu</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Tuyển dụng</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Điều khoản</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col">
+						<div style="font-weight: 600; padding: 8px 16px">DANH MỤC</div>
+						<ul class="nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Phụ kiện di động</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Phụ kiện laptop</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Thiết bị chơi game</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Thiết bị mạng</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Thiết bị lưu trữ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Phụ kiện khác</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col">
+						<div style="font-weight: 600; padding: 8px 16px">THEO DÕI</div>
+						<ul class="nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Facebook</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Instagram</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link-dark" href="#">Linkedin</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="border-top py-4">
+					<ul class="list-inline mb-0">
+						<li class="list-inline-item">
+							<span style="font-weight: 600; padding: 8px 16px"
+								>HỖ TRỢ THANH TOÁN</span
+							>
+						</li>
+						{% load static%}
+						<li class="list-inline-item">
+							<img src="{% static 'img/mastercard.svg' %}" alt="" />
+						</li>
+						<li class="list-inline-item">
+							<img src="{% static 'img/paypal.svg' %}" alt="" />
+						</li>
+						<li class="list-inline-item">
+							<img src="{% static 'img/visa.svg' %}" alt="" />
+						</li>
+					</ul>
+				</div>
+				<div class="border-top py-4">
+					<div class="row align-items-center">
+						<div class="col">
+							<div class="text-start">
+								Copyright ©2024, phoneaccessories.com, All rights reserved
+							</div>
+						</div>
+						<div class="col">
+							<div class="text-end">
+								<ul class="list-inline mb-0">
+									<li class="list-inline-item">Follow us on</li>
+									{% load static%}
+									<li class="list-inline-item">
+										<a href="#"
+											><iconify-icon
+												icon="openmoji:facebook"
+												width="24"
+												height="24"
+											></iconify-icon
+										></a>
+									</li>
+									<li class="list-inline-item">
+										<a href="#"
+											><iconify-icon
+												icon="skill-icons:instagram"
+												width="24"
+												height="24"
+											></iconify-icon
+										></a>
+									</li>
+									<li class="list-inline-item">
+										<a href="#"
+											><iconify-icon
+												icon="openmoji:linkedin"
+												width="24"
+												height="24"
+											></iconify-icon
+										></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% load static %}
+		<script src="{% static 'js/bootstrap_5.3.3.bundle.min.js' %}"></script>
+		<script src="{% static 'js/jquery_3.7.1.min.js' %}"></script>
+		<script src="{% static 'js/iconify-icon_2.1.0.min.js' %}"></script>
+		<script src="{% static 'js/swiper-bundle_11.1.1.min.js' %}"></script>
+		{% block libraryJS %}{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends "pages/base.html" %} {% block title %}Trang chủ{% endblock %} {%block libraryCSS %}
+
+<!-- <script>
+	function format_gia_tien(gia) {
+		var gia_str = String(gia);
+		if (gia_str.length <= 3) {
+			return gia_str;
+		}
+		var parts = [];
+		while (gia_str) {
+			parts.push(gia_str.slice(-3));
+			gia_str = gia_str.slice(0, -3);
+		}
+		return parts.reverse().join('.');
+	}
+</script> -->
+{% endblock %} 
+<!-- //Nạp content -->
+{%block content %}
+<!-- Swiper -->
+
+	<div class="col-3 ">
+		<div class="my-4 m-3">
+			<h3 class="mb-4 h5">Danh mục</h3>
+			<!-- thẻ card danh mục -->
+			<div class="card">
+				<ul class="nav nav-category flex-column" id="categoryCollapseMenu">
+					<li class="nav-item px-4 py-1 border-bottom">
+						<a class="nav-link"
+						   data-bs-toggle="collapse"
+						   data-bs-target="#flush-collapseOne"
+						   aria-expanded="false"
+						   aria-controls="flush-collapseOne"
+						   role="button"
+						>
+							<span style="font-weight: bold">Phụ kiện điện thoại</span>
+							<iconify-icon icon="oui:arrow-right" width="24" height="24"></iconify-icon>
+						</a>
+						<div class="accordion-collapse collapse" id="flush-collapseOne" data-bs-parent="#categoryCollapseMenu">
+							<div class="py-1">
+								<ul class="nav flex-column">
+									{% for loai in DSLoai %}
+									<li class="nav-item">
+										<a class="nav-link" href="#">{{loai.TenLoai}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="card">
+				<ul class="nav nav-category flex-column" id="productCollapseMenu">
+					<li class="nav-item px-4 py-1 border-bottom">
+						<a class="nav-link"
+						   data-bs-toggle="collapse"
+						   data-bs-target="#flush-collapseTwo"
+						   aria-expanded="false"
+						   aria-controls="flush-collapseTwo"
+						   role="button"
+						>
+							<span style="font-weight: bold">Quản lý sản phẩm</span>
+							<iconify-icon icon="oui:arrow-right" width="24" height="24"></iconify-icon>
+						</a>
+						<div class="accordion-collapse collapse" id="flush-collapseTwo" data-bs-parent="#productCollapseMenu">
+							<a href="/products/themSP/">Thêm sản phẩm mới</a>
+							<a href="">Quản lý</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+
+	</div>
+	
+	<div class="col-9 p-md-4">
+		<div class="row">
+			{% block main %}
+			{% endblock %}
+		</div>
+	</div>
+
+
+{% endblock %} 
+{% block libraryJS %}
+<!-- Initialize Swiper -->
+<script>
+	var swiper = new Swiper(".banner", {
+		slidesPerView: 1,
+		spaceBetween: 30,
+		loop: true,
+		autoplay: {
+			delay: 2500,
+			disableOnInteraction: false,
+		},
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+	});
+</script>
+{% endblock %}

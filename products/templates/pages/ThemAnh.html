@@ -1,0 +1,25 @@
+{% extends 'pages/Layout_SP.html'%}
+{% block content %}
+    <!-- tạo một hàng thê thểhieenj thông tin đang thêm -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-danger text-center">Trang thêm Ảnh</h2>
+
+        </div>
+    </div>
+    <div class="row bg-body-tertiary pb-3 mb-3" >
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="" class="form-label">Image</label>
+                    <input type="file" Required name="img" class="form-control">
+                </div>
+                <div >
+                    <button class="btn btn-success mt-3" type="submit">Thêm Ảnh</button>
+                </div>  
+                
+            </form>        
+        </div>
+    </div>
+{% endblock %}
