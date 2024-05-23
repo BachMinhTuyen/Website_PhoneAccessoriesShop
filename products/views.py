@@ -16,18 +16,25 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # ======================================================View cho khách hàng======================================
 # Trang chính hiển thị sản phẩm
-def index(request):
-    return render(request, 'pages/SanPham.html')
+# def index(request):
+#     return render(request, 'pages/SanPham.html')
+
 # Thông tin toàn bộ sản phẩm cho KH
 def DSSP(request):
     listLoai = LoaiSP.objects.all()
-    data = {'DSLoai': listLoai, 'DSSP': SanPham.objects.all(),}
+    data = {
+        'DSLoai': listLoai,
+        'DSSP': SanPham.objects.all(),
+    }
+    return render(request, 'pages/SanPham.html', data)
 
-    return render(request, 'pages/SanPham.html',data)
 def DSSP_TheoLoai(request, id):
-    listLoai = LoaiSP.objects.all()
+    # listLoai = LoaiSP.objects.all()
     dssp = SanPham.objects.all().filter(MaLoai= id)
-    data = {'DSLoai': listLoai,'DSSP': dssp,}
+    data = {
+        # 'DSLoai': listLoai,
+        'DSSP': dssp,
+    }
     return render(request, 'pages/SanPham.html',data)
 
 def chiTietSP(request, id):
@@ -63,7 +70,7 @@ def themSP(request):
                         destination.write(chunk)
                 san_pham.Anh = anh_tai_len.name
             san_pham.save()
-            return redirect('/products/SPQL/')  
+            return redirect('/product/SPQL/')  
     else:
         form = SanPhamForm()
     return render(request, 'pages/ThemSP.html', {'form': form})
@@ -77,7 +84,7 @@ def XoaSP(request, id):
     sp = SanPham.objects.get(id = id)
     sp.delete()
     messages.success(request, 'Đã xóa sản phẩm thành công!!')
-    return redirect('/products/SPQL') 
+    return redirect('/product/SPQL') 
 #Sửa sản phẩm. 
 def updateSP(request, id):
     # san_pham = get_object_or_404(SanPham, id=id)
@@ -94,7 +101,7 @@ def updateSP(request, id):
     #                     destination.write(chunk)
     #             san_pham.Anh = anh_tai_len.name
     #         san_pham.save()
-    #         return redirect('/products/SPQL/')
+    #         return redirect('/product/SPQL/')
     # else:
     #     form = SanPhamForm(instance=san_pham)
     # return render(request, 'pages/updateSP.html', {'form': form})
@@ -113,7 +120,7 @@ def updateSP(request, id):
                         destination.write(chunk)
                 san_pham.Anh = anh_tai_len.name
             san_pham.save()
-            return redirect('/products/SPQL/')
+            return redirect('/product/SPQL/')
     else:
         form = SanPhamForm(instance=san_pham)
     return render(request, 'pages/updateSP.html', {'form': form})

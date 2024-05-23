@@ -1,6 +1,6 @@
 {% extends "pages/Layout_SP.html" %}
 {%block content%}
-<script>
+<!-- <script>
 	function format_gia_tien(gia) {
 		var gia_str = String(gia);
 		if (gia_str.length <= 3) {
@@ -13,7 +13,7 @@
 		}
 		return parts.reverse().join('.');
 	}
-</script>
+</script> -->
 <div class="row p-md-3">
     <div class="col-7">
       <!-- Cột 1 -->
@@ -49,21 +49,22 @@
       <div class="row">
         <!-- tên sản phẩm -->
         <div class="col-12 d-flex">
-            <h1>{{SP.TenSP}}</h2>
+            <h3>{{SP.TenSP}}</h2>
         </div>
         <!-- Giá bán -->
         <div>
-          <h2 class="text-danger"><span class="text-danger" id="gia_tien"></span> VND</h2>
-          <script>
+          {% load humanize %}
+          <h4 class="text-danger"><span class="text-danger" id="gia_tien"></span>{{ SP.GiaBan|floatformat:"0"|intcomma }} VND</h4>
+          <!-- <script>
 						var gia_tien = {{SP.GiaBan}}
 						document.getElementById("gia_tien").innerText = format_gia_tien(gia_tien)
-					</script>
+					</script> -->
         </div>
         <!-- thêm số lơngj sản phâmr mua -->
         <div class="cart-item w-auto">
-          <span><h2>Số lượng
+          <span><h4>Số lượng
             <input style="width: 30%;"  type="number" class=" quantity-input" value="1" min="1">
-          </h2></span>
+          </h4></span>
           
       </div>
         <!-- Nút vỏ hàng -->
