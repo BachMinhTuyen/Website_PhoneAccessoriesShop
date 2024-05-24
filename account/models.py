@@ -33,6 +33,11 @@ class HoaDon(models.Model):
     MaHD = models.AutoField(primary_key=True)
     NgayLap = models.DateField()
     TongTien = models.IntegerField()
+    PhuongThucVanChuyen = models.CharField(max_length=100, default='Giao Nhanh')
+    PhiVanChuyen = models.IntegerField(default=0)
+    TrangThai = models.CharField(max_length=100, null=True)
+    PhuongThucThanhToan = models.CharField(max_length=100, default='COD')
+    GhiChu = models.TextField(null=True)
     MaKH = models.ForeignKey(KhachHang, on_delete=models.CASCADE, related_name='KhachHang_HoaDon')
 
 class ChiTietHD(models.Model):
