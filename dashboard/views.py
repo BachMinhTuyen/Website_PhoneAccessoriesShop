@@ -163,7 +163,7 @@ def LapPhieuNhap(request):
             phieunhap = phieunhap_form.save(commit=False)
             total_amount = 0
             for form in formset:
-                if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
+                if form.cleaned_data:
                     quantity = form.cleaned_data.get('SoLuong', 0)
                     price = form.cleaned_data.get('GiaNhap', 0)
                     total_amount += quantity * price
@@ -171,8 +171,8 @@ def LapPhieuNhap(request):
             phieunhap.save()
             formset.instance = phieunhap
             formset.save()
-            return HttpResponseRedirect('/dashboard/PhieuNhap')  
-        
+            return HttpResponseRedirect('/dashboard/Phieu_Nhap') 
+    else:
         phieunhap_form = PhieuNhapForm()
         formset = ChiTietPhieuNhapFormSet(instance=PhieuNhap())
 
@@ -180,7 +180,6 @@ def LapPhieuNhap(request):
         'phieunhap_form': phieunhap_form,
         'formset': formset,
     })
-    
 # def Sua_PN(request, pk):
 #     phieunhap = get_object_or_404(PhieuNhap, pk=pk)
 #     if request.method == 'POST':
