@@ -1,0 +1,33 @@
+{% extends "pages/base.html" %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+<h1>Shopping Cart</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Giá tiền</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền</th>
+            <th>Xoá</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>${{ item.product.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.product.price|floatformat:2 }}</td>
+            <td>
+                <a href="{% url 'remove_from_cart' %}{{item.product.id}}" class="btn btn-danger btn-sm">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'index' %}" class="btn btn-secondary">Continue Shopping</a>
+<a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
+{% endblock %}

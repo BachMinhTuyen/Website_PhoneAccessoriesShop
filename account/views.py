@@ -16,12 +16,13 @@ def user_login(request):
         password = request.POST['password']
         user = Account.objects.filter(UserName=username, Password=password).first()
         if (user):
+            request.session["username"] = user.UserName
             if (user.Quyen == 'khachhang'):
                 # login(request, user)
-                request.session["username"] = user.UserName
+                # request.session["username"] = user.UserName
                 return redirect('home')
             else:
-                return render(request, 'page/register.html')
+                return redirect('dashboard')
         else:
             messages.error(request, 'Thông tin đăng nhập không chính xác.')
     return render(request, 'page/login.html')

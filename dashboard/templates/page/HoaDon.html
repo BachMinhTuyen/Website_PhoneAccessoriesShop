@@ -1,0 +1,30 @@
+{% extends "pages/layout.html" %} {% block title %} Thể Loại {% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" >
+    <h2>Danh Sách Hóa Đơn</h2>
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th>Mã hóa đơn</th>
+            <th>Ngày Lập</th>
+            <th>Tổng Tiền</th>
+            <th>Mã khách hàng</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in DM_HD %}
+            <tr>
+            <td>{{ item.MaHD }}</td>
+            <td>{{ item.NgayLap }}</td>
+            <td>{{ item.TongTien }}</td>
+            <td>{{ item.MaKH}}</td>
+            <td>
+                <a href="/dashboard/XemCT_HD/{{item.MaHD}}">Xem chi tiết</a>
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

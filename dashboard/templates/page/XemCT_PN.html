@@ -1,0 +1,33 @@
+{% extends "pages/layout.html" %} {% block title %} Chi Tiết Phiếu Nhập{% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" >
+    <h2>Chi tiết phiếu nhập</h2>
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th>MaCTPN </th>
+            <th>MaPhieuNhap</th>
+            <th>MaSP</th>
+            <th>MaNCC</th>
+            <th>SoLuong</th>
+            <th>GiaNhap</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in DM_CTPN %}
+            <tr>
+            <td>{{ item.MaCTPN }}</td>
+            <td>{{ item.MaPhieuNhap }}</td>
+            <td>{{ item.MaSP }}</td>
+            <td>{{ item.MaNCC}}</td>
+            <td>{{ item.SoLuong}}</td>
+            <td>{{ item.GiaNhap}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}
+
+
+

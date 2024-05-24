@@ -1,0 +1,27 @@
+{% extends "pages/layout.html" %} {% block title %} Thể Loại {% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" >
+    <h2>Danh Sách Thể Loại <a href="{% url 'Them_LoaiSP' %}" class="btn btn-primary" style="margin-left: 300px;">Thêm thể loại</a></h2>
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">Mã loại</th>
+            <th scope="col">Tên loại</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in DM_LoaiSP %}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.TenLoai }}</td>
+            <td>
+              <a href="/dashboard/Xoa_LoaiSP/{{item.id}}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
+              <a href="/dashboard/Sua_LoaiSP/{{item.id}}" >Sửa</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

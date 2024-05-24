@@ -1,0 +1,33 @@
+{% extends "pages/layout.html" %} {% block title %} Thể Loại {% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" >
+    <h2>Danh Sách Nhân Viên <a href="#" class="btn btn-primary" style="margin-left: 300px;">Thêm Nhân Viên</a></h2>
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">Mã nhân viên</th>
+            <th scope="col">Tên nhân viên</th>
+            <th scope="col">Giới tính</th>
+            <th scope="col">Ngày Sinh</th>
+            <th scope="col"></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in DM_NhanVien %}
+          <tr>
+            <td>{{ item.MaNV }}</td>
+            <td>{{ item.TenNV }}</td>
+            <td>{{ item.GioiTinh }}</td>
+            <td>{{ item.NgaySinh }}</td>
+            <td>
+            <a href="#">Xem chi tiết</a>
+            <a href="#" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
+            <a href="#">Sửa</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

@@ -24,6 +24,7 @@
 			<h3 class="text-primary">Thông tin tài khoản</h3>
 			<div class="mb-5">
 				<form action="#" method="post">
+					{% csrf_token %}
 					<div class="mb-3">
 						<label for="InputFullName" class="form-label">Họ và tên:</label>
 						<input
@@ -32,6 +33,7 @@
 							id="InputFullName"
 							placeholder="Nguyễn Văn A"
 							value="{{kh.TenKH}}"
+							name="full_name"
 						/>
 					</div>
 					<div class="mb-3">
@@ -42,6 +44,7 @@
 							id="InputEmail"
 							placeholder="example@domain.com"
 							value="{{kh.Email}}"
+							name="email"
 						/>
 					</div>
 					<div class="mb-3">
@@ -52,6 +55,7 @@
 							id="InputNumberPhone"
 							placeholder="(+84) 0123.456.789"
 							value="{{kh.SoDT}}"
+							name="phone_number"
 						/>
 					</div>
 					<div class="mb-3">
@@ -62,6 +66,7 @@
 							id="InputAddress"
 							placeholder="140 Lê Trọng Tấn, P.Tây Thạnh, Q.Tân Phú, TP.HCM"
 							value="{{kh.DiaChi}}"
+							name="address"
 						/>
 					</div>
 					<button type="submit" class="btn btn-primary float-end">Cập nhật</button>
@@ -71,6 +76,7 @@
 			<h3 class="text-primary">Thông tin đăng nhập</h3>
 			<div class="mb-5">
 				<form action="#" method="post">
+					{% csrf_token %}
 					<div class="mb-3">
 						<label for="InputUserName" class="form-label">Username:</label>
 						<input
@@ -79,20 +85,21 @@
 							id="InputUserName"
 							placeholder="nguyenvana123"
 							value="{{acc.UserName}}"
+							name="username"
 							disabled
 						/>
 					</div>
 					<div class="mb-3">
 						<label for="InputCurrentPassword" class="form-label">Mật khẩu hiện tại:</label>
-						<input type="password" class="form-control" id="InputCurrentPassword"/>
+						<input type="password" class="form-control" id="InputCurrentPassword" name="current_password"/>
 					</div>
 					<div class="mb-3">
 						<label for="InputNewPassword" class="form-label">Mật khẩu mới:</label>
-						<input type="password" class="form-control" id="InputNewPassword" />
+						<input type="password" class="form-control" id="InputNewPassword" name="new_password"/>
 					</div>
 					<div class="mb-3">
 						<label for="InputConfirmPassword" class="form-label">Nhập lại mật khẩu mới:</label>
-						<input type="password" class="form-control" id="InputConfirmPassword" />
+						<input type="password" class="form-control" id="InputConfirmPassword" name="confirm_password" />
 					</div>
 					<button type="submit" class="btn btn-primary float-end">Cập nhật</button>
 				</form>

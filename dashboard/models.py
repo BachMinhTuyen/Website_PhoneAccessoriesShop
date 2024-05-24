@@ -9,6 +9,15 @@ class PhieuNhap(models.Model):
     NgayNhap = models.DateField()
     TrangThai = models.CharField(max_length=100)
     TongTien = models.IntegerField()
+    
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.TongTien = sum(
+                chi_tiet.SoLuong * chi_tiet.GiaNhap
+                for chi_tiet in self.chitietphieunhap_set.all()
+            )
+        super().save(*args, **kwargs)
+    
 
 class ChiTietPhieuNhap(models.Model):
     MaCTPN = models.AutoField(primary_key=True)

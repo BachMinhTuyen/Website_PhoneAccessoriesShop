@@ -1,0 +1,10 @@
+{% extends "pages/layout.html" %} {% block title %} Dashboard {% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" > 
+    <form method="POST" action="{% url 'Sua_NCC' ncc_id=ncc.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Lưu</button>
+    </form>
+</div>
+{% endblock %}

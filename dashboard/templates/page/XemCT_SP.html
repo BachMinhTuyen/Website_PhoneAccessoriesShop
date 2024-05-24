@@ -1,0 +1,23 @@
+{% extends "pages/layout.html" %}
+{% block title %} Xem Chi Tiết Sản Phẩm {% endblock %}
+{% block libraryCSS %}
+
+{% endblock %}
+{% block content %}
+<div class="col-9 my-3">
+    <h1>Chi Tiết Sản Phẩm</h1>
+    <p>Tên sản phẩm: {{ single_product.TenSP }}</p>
+    <p>Số lượng: {{ single_product.Soluong }}</p>
+    <p>Giá nhập: {{ single_product.GiaNhap }}</p>
+    <p>Giá bán: {{ single_product.GiaBan }}</p>
+    <p>Mã Loại: {{ single_product.MaLoai }}</p>
+    <p>Mã Nhà Cung Cấp: {{ single_product.MaNCC }}</p>
+    <p>Mô tả: {{ single_product.Mota }}</p>
+    <p>Trạng thái: {% if single_product.TrangThai %}Có hàng{% else %}Không có hàng{% endif %}</p>
+    <div class="img-big-wrag"> 
+        <p>Hình ảnh :
+        <img class="w-100" src="/static/img/{{ single_product.Anh }}"/></p>
+    </div>
+    <p>Tên Thiết Bị: {{ single_product.TenThietBi }}</p>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "pages/layout.html" %}
+{% block title %}Lập Phiếu Nhập{% endblock %}
+{% block content %}
+<div class="col-9 my-3" >
+    <form method="post">
+        {% csrf_token %}
+        <center><h2>Lập Phiếu Nhập</h2></center>
+        <br><br>
+        {{ phieunhap_form.as_table }}
+        <br><br><br>
+        {{ formset.management_form }}
+        <div id="formset">
+            {% for form in formset %}
+                <div class="form-row">
+                    {{ form.as_table }}
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <h3>Tổng Tiền: <span id="total-amount">0</span></h3>
+        <input type="hidden" id="id_TongTien" name="TongTien" value="0">
+
+        <button type="submit" style="margin-left: 500px;">Save</button>
+    </form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formset = document.getElementById('formset');
+    const totalAmountElement = document.getElementById('total-amount');
+    const totalAmountInput = document.getElementById('id_TongTien');
+    
+    function calculateTotal() {
+        let totalAmount = 0;
+        const rows = formset.querySelectorAll('.form-row');
+        rows.forEach(row => {
+            const quantityInput = row.querySelector('input[name$="-SoLuong"]');
+            const priceInput = row.querySelector('input[name$="-GiaNhap"]');
+            const quantity = parseInt(quantityInput.value) || 0;
+            const price = parseInt(priceInput.value) || 0;
+            totalAmount += quantity * price;
+        });
+        totalAmountElement.textContent = totalAmount;
+        totalAmountInput.value = totalAmount;
+    }
+
+    formset.addEventListener('input', function(event) {
+        if (event.target.name.endsWith('-SoLuong') || event.target.name.endsWith('-GiaNhap')) {
+            calculateTotal();
+        }
+    });
+
+    calculateTotal();
+});
+</script>
+
+{% endblock %}

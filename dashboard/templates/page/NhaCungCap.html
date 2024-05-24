@@ -1,0 +1,31 @@
+{% extends "pages/layout.html" %} {% block title %} Thể Loại {% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" >
+    <h2>Danh Sách Nhà Cung Cấp <a href="{% url 'Them_NCC' %}" class="btn btn-primary" style="margin-left: 300px;">Thêm Nhà Cung Cấp</a></h2>
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">Nhà Cung Cấp</th>
+            <th scope="col">Địa Chỉ</th>
+            <th scope="col">Email</th>
+            <th scope="col">SDT</th>
+            <th scope="col">Website</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in DM_NCC %}
+          <tr>
+            <td>{{ item.TenNCC }}</td>
+            <td>{{ item.DiaChi }}</td>
+            <td>{{ item.Email }}</td>
+            <td>{{ item.SDT }}</td>
+            <td>{{ item.WebSite }}</td>
+            <td><a href="/dashboard/Xoa_NCC/{{item.id}}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
+            <a href="/dashboard/Sua_NCC/{{item.id}}">Sửa</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}
