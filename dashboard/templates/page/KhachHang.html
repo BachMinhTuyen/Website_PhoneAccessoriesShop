@@ -1,0 +1,35 @@
+{% extends "pages/layout.html" %} {% block title %} Danh Sách Khách Hàng {% endblock %} {%block libraryCSS %} {% endblock %} {%block content %}
+<div class="col-9 my-3">
+	<h2>
+		Danh Sách Khách Hàng
+		<a href="#" class="btn btn-primary" style="margin-left: 300px">Thêm Khách Hàng</a>
+	</h2>
+	<table class="table my-3">
+		<thead>
+			<tr>
+				<th scope="col">Mã KH</th>
+				<th scope="col">Tên KH</th>
+				<th scope="col">Giới tính</th>
+				<th scope="col">Ngày Sinh</th>
+				<th scope="col"></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in DM_KhachHang %}
+			<tr>
+				<td>{{ item.MaKH }}</td>
+				<td>{{ item.TenKH }}</td>
+				<td>{{ item.GioiTinh }}</td>
+				<td>{{ item.NgaySinh }}</td>
+				<td>
+					<a href="#">Xem chi tiết</a>
+					<a href="#" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
+					<a href="#">Sửa</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

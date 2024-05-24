@@ -21,7 +21,7 @@ def user_login(request):
                 # login(request, user)
                 # request.session["username"] = user.UserName
                 return redirect('home')
-            else:
+            if (user.Quyen == 'nhanvien'):
                 return redirect('dashboard')
         else:
             messages.error(request, 'Thông tin đăng nhập không chính xác.')

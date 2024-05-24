@@ -26,5 +26,6 @@ urlpatterns = [
     path('LapPhieuNhap', views.LapPhieuNhap, name='LapPhieuNhap'),
     # path('Sua_PN/<int:pk>/', views.Sua_PN, name='edit_phieunhap'),
     
-    
+    path('NhanVien', views.list_NhanVien, name='NhanVien'),
+    path('KhachHang', views.list_KhachHang, name='KhachHang'),
 ]

@@ -217,4 +217,16 @@ def XemCT_PN(request, MaPN):
     }
     return render(request, 'page/XemCT_PN.html', data)
 
+#Nhan Vien
+def list_NhanVien(request):
+    data = {
+        'DM_NhanVien': NhanVien.objects.all(),
+    }
+    return render(request, 'page/NhanVien.html', data)
 
+#KhachHang
+def list_KhachHang(request):
+    data = {
+        'DM_KhachHang': KhachHang.objects.all(),
+    }
+    return render(request, 'page/KhachHang.html', data)

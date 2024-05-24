@@ -63,13 +63,13 @@
         <!-- thêm số lơngj sản phâmr mua -->
         <div class="cart-item w-auto">
           <span><h4>Số lượng
-            <input style="width: 30%;"  type="number" class=" quantity-input" value="1" min="1">
+            <input style="width: 30%;"  type="number" class="quantity-input" value="1" min="1">
           </h4></span>
           
       </div>
         <!-- Nút vỏ hàng -->
         <div class="row">
-          <a href="/cart/add/{{SP.id}}" type="button" class="m-3 w-auto btn btn-primary btn-lg btn-shopping-cart">
+          <a href="/cart/add/{{SP.id}}" type="button" id="add-to-cart" class="m-3 w-auto btn btn-primary btn-lg btn-shopping-cart">
             <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
           </a>
         </div>
@@ -82,3 +82,30 @@
     </div>
   </div>
 {% endblock%}
+{% block libraryJS %}
+<script type="text/javascript">
+    $(document).ready(function() {
+      // $('.quantity-input').on('change', function() {
+        $('#add-to-cart').on('click', function() {
+          var quantity = $('.quantity-input').val();
+          var productId = $('.quantity-input').data('product-id');
+          
+          $.ajax({
+              url: '/cart/add/${productId}/',
+              type: 'POST',
+              data: {
+                  'quantity': quantity,
+                  'csrfmiddlewaretoken': '{{ csrf_token }}'
+              },
+              success: function(response) {
+                  console.log('Updated successfully:', response);
+              },
+              error: function(xhr, status, error) {
+                  // Handle error
+                  console.error('Error updating ...:', status, error);
+              }
+            });
+        });
+    });
+</script>
+{% endblock %}

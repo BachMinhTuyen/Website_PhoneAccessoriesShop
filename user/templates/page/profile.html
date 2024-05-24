@@ -27,6 +27,16 @@
 					{% csrf_token %}
 					<div class="mb-3">
 						<label for="InputFullName" class="form-label">Họ và tên:</label>
+						{% if acc.Quyen == 'nhanvien' %}
+						<input
+							type="text"
+							class="form-control"
+							id="InputFullName"
+							placeholder="Nguyễn Văn A"
+							value="{{kh.TenNV}}"
+							name="full_name"
+						/>
+						{% else %}
 						<input
 							type="text"
 							class="form-control"
@@ -35,6 +45,7 @@
 							value="{{kh.TenKH}}"
 							name="full_name"
 						/>
+						{% endif %}
 					</div>
 					<div class="mb-3">
 						<label for="InputEmail" class="form-label">Email:</label>
