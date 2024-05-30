@@ -11,10 +11,10 @@
         <div class="col-12">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div>
+                <!-- <div>
                     <label for="" class="form-label">Img</label>
                     <input type="file" required name="img" class="form-control">
-                </div>
+                </div> -->
                 {{ form.as_table }}
                 <div >
                     <button class="btn btn-success mt-3" type="submit">Thêm sản phẩm</button>

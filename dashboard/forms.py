@@ -40,37 +40,32 @@ class NhaCungCapForm(forms.ModelForm):
         except NhaCungCap.DoesNotExist:
             return TenNCC
 
-#Them SanPham
+
+
+            
+        
 class ThemSanPhamForm(forms.ModelForm):
     class Meta:
         model = SanPham
-        fields = '__all__'
-        widgets = {
-            'GiaNhap': forms.NumberInput(attrs={'class': 'form-input'}),
-            'GiaBan': forms.NumberInput(attrs={'class': 'form-input'}),
-        }
+        fields = ['TenSP', 'MaLoai', 'MaNCC', 'Mota', 'Anh', 'TenThietBi']
+
+            
         
-    def clean(self):
-        cleaned_data = super().clean()
-        gia_nhap = cleaned_data.get('GiaNhap')
-        gia_ban = cleaned_data.get('GiaBan')
-
-        if gia_nhap > gia_ban:
-            raise forms.ValidationError("Giá nhập phải nhỏ hơn hoặc bằng giá bán.")
-
-        return cleaned_data
-
-
-
-
-
+class SuaSanPhamForm(forms.ModelForm):
+    class Meta:
+        model = SanPham
+        fields = ['TenSP', 'MaLoai', 'MaNCC', 'Mota', 'Anh', 'TenThietBi','Soluong','GiaNhap','GiaBan']      
+    
+       
+        
+        
 # Lap Phieu Nhap Hang
 class PhieuNhapForm(forms.ModelForm):
     NgayNhap = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-input','type': 'date'}))
-    TrangThai = forms.BooleanField(required=False) 
+    TrangThai = forms.BooleanField(required=True) 
     class Meta:
         model = PhieuNhap
-        fields = ['MaNV', 'NgayNhap', 'TrangThai', 'TongTien']
+        fields = ['MaNV', 'NgayNhap', 'TongTien','TrangThai']
         
     def __init__(self, *args, **kwargs):
         super(PhieuNhapForm, self).__init__(*args, **kwargs)

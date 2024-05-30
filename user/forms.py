@@ -1,5 +1,5 @@
 from django import forms
-from .models import Account, KhachHang
+from .models import KhachHang
 
 class ProfileForm(forms.Form):
     full_name = forms.CharField(max_length=100, label='Họ và tên')
@@ -7,28 +7,11 @@ class ProfileForm(forms.Form):
     phone_number = forms.CharField(max_length=100, label='Số điện thoại')
     address = forms.CharField(max_length=100, label='Địa chỉ')
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     password = cleaned_data.get('password')
-    #     confirm_password = cleaned_data.get('confirm_password')
-
-    #     if password != confirm_password:
-    #         raise forms.ValidationError("Mật khẩu không khớp.")
-        
-    #     return cleaned_data
-
-    def save(self):
+    def update_profile(self, username):
         cleaned_data = self.cleaned_data
-        # account = Account.objects.create(
-        #     UserName=cleaned_data['username'],
-        #     Password=cleaned_data['password'],
-        #     Quyen='khachhang'
-        # )
-        KhachHang.objects.create(
-            # UserName=account,
+        KhachHang.objects.filter(UserName=username).update(
             TenKH=cleaned_data['full_name'],
             Email=cleaned_data['email'],
             SoDT=cleaned_data['phone_number'],
             DiaChi=cleaned_data['address'],
-        )
-        # return account
+        )    

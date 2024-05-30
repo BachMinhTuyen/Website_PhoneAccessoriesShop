@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from account.models import Account, KhachHang, NhanVien
 
@@ -37,3 +37,6 @@ def receipt(request):
 
 def receiptdetails(request):
     return render(request, 'page/receiptdetails.html')
+
+# def update_profile(request):
+    

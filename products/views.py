@@ -70,7 +70,7 @@ def themSP(request):
                         destination.write(chunk)
                 san_pham.Anh = anh_tai_len.name
             san_pham.save()
-            return redirect('/product/SPQL/')  
+            return redirect('/products/SPQL/')  
     else:
         form = SanPhamForm()
     return render(request, 'pages/ThemSP.html', {'form': form})
@@ -84,7 +84,7 @@ def XoaSP(request, id):
     sp = SanPham.objects.get(id = id)
     sp.delete()
     messages.success(request, 'Đã xóa sản phẩm thành công!!')
-    return redirect('/product/SPQL') 
+    return redirect('/products/SPQL') 
 #Sửa sản phẩm. 
 def updateSP(request, id):
     # san_pham = get_object_or_404(SanPham, id=id)
@@ -101,7 +101,7 @@ def updateSP(request, id):
     #                     destination.write(chunk)
     #             san_pham.Anh = anh_tai_len.name
     #         san_pham.save()
-    #         return redirect('/product/SPQL/')
+    #         return redirect('/products/SPQL/')
     # else:
     #     form = SanPhamForm(instance=san_pham)
     # return render(request, 'pages/updateSP.html', {'form': form})
@@ -120,7 +120,7 @@ def updateSP(request, id):
                         destination.write(chunk)
                 san_pham.Anh = anh_tai_len.name
             san_pham.save()
-            return redirect('/product/SPQL/')
+            return redirect('/products/SPQL/')
     else:
         form = SanPhamForm(instance=san_pham)
     return render(request, 'pages/updateSP.html', {'form': form})

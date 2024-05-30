@@ -1,7 +1,8 @@
+from pyexpat.errors import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from account.models import HoaDon, KhachHang, NhanVien
-from dashboard.forms import ChiTietPhieuNhapForm, ChiTietPhieuNhapFormSet, PhieuNhapForm, TheLoaiForm, NhaCungCapForm, ThemSanPhamForm
+from dashboard.forms import ChiTietPhieuNhapForm, ChiTietPhieuNhapFormSet, PhieuNhapForm, SuaSanPhamForm, TheLoaiForm, NhaCungCapForm, ThemSanPhamForm
 from dashboard.models import PhieuNhap,ChiTietPhieuNhap
 from products.models import NhaCungCap, LoaiSP, SanPham
 from django.forms.models import inlineformset_factory
@@ -92,18 +93,24 @@ def list_SanPham(request):
    }
    return render(request, 'page/SanPham.html', data)
 
-
 def Them_SanPham(request):
     if request.method == 'POST':
         form = ThemSanPhamForm(request.POST)
         if form.is_valid():
-            form.save()  
+            san_pham = form.save(commit=False)
+            san_pham.Soluong = 0  
+            san_pham.GiaNhap = 0
+            san_pham.TrangThai =False
+            san_pham.GiaBan = 0
+            san_pham.save()
             return HttpResponseRedirect('/dashboard/SanPham')  
+           
     else:
         form = ThemSanPhamForm()
 
     context = {'form': form}
     return render(request, 'page/Them_SanPham.html', context)
+
 
 
 def Xoa_SP(request, sp_id):
@@ -114,15 +121,15 @@ def Xoa_SP(request, sp_id):
 def Sua_SP(request, sp_id):
     sanpham = SanPham.objects.get(id=sp_id)
     if request.method == 'POST':
-        form = ThemSanPhamForm(request.POST, instance=sanpham)
+        form = SuaSanPhamForm(request.POST, instance=sanpham)
         if form.is_valid():
+            
             form.save()
             return HttpResponseRedirect('/dashboard/SanPham')
     else:
-        form = ThemSanPhamForm(instance=sanpham)
+        form = SuaSanPhamForm(instance=sanpham)
 
     return render(request, 'page/Sua_SP.html', {'form': form, 'sanpham': sanpham})
-
 
 def XemCT_SP(request, sp_id):
     sp = SanPham.objects.get(id=sp_id)
@@ -162,16 +169,27 @@ def LapPhieuNhap(request):
         if phieunhap_form.is_valid() and formset.is_valid():
             phieunhap = phieunhap_form.save(commit=False)
             total_amount = 0
+            phieunhap.save()  
+
             for form in formset:
                 if form.cleaned_data:
                     quantity = form.cleaned_data.get('SoLuong', 0)
                     price = form.cleaned_data.get('GiaNhap', 0)
+                    san_pham = form.cleaned_data.get('MaSP')
+                    if san_pham:
+                        san_pham.Soluong += quantity
+                        san_pham.GiaNhap = price 
+                        san_pham.TrangThai =True
+                        san_pham.save()
+
                     total_amount += quantity * price
+            
             phieunhap.TongTien = total_amount
-            phieunhap.save()
+            phieunhap.save()  
             formset.instance = phieunhap
             formset.save()
-            return HttpResponseRedirect('/dashboard/Phieu_Nhap') 
+            
+            return HttpResponseRedirect('/dashboard/Phieu_Nhap')
     else:
         phieunhap_form = PhieuNhapForm()
         formset = ChiTietPhieuNhapFormSet(instance=PhieuNhap())
@@ -180,41 +198,10 @@ def LapPhieuNhap(request):
         'phieunhap_form': phieunhap_form,
         'formset': formset,
     })
-# def Sua_PN(request, pk):
-#     phieunhap = get_object_or_404(PhieuNhap, pk=pk)
-#     if request.method == 'POST':
-#         phieunhap_form = PhieuNhapForm(request.POST, instance=phieunhap)
-#         formset = ChiTietPhieuNhapFormSet(request.POST, instance=phieunhap)
-        
-#         if phieunhap_form.is_valid() and formset.is_valid():
-#             phieunhap = phieunhap_form.save(commit=False)
-#             total_amount = 0
-#             for form in formset:
-#                 if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
-#                     quantity = form.cleaned_data.get('SoLuong', 0)
-#                     price = form.cleaned_data.get('GiaNhap', 0)
-#                     total_amount += quantity * price
-#             phieunhap.TongTien = total_amount
-#             phieunhap.save()
-#             formset.instance = phieunhap
-#             formset.save()
-#             return HttpResponseRedirect('/dashboard/PhieuNhap')  
-#     else:
-#         phieunhap_form = PhieuNhapForm(instance=phieunhap)
-#         formset = ChiTietPhieuNhapFormSet(instance=phieunhap)
 
-#     return render(request, 'page/Sua_PN.html', {
-#         'phieunhap_form': phieunhap_form,
-#         'formset': formset,
-#     })
-    
-    
 
-def XemCT_PN(request, MaPN):
-    data = {
-        'DM_CTPN': ChiTietPhieuNhap.objects.get(MaPN=MaPN),
-    }
-    return render(request, 'page/XemCT_PN.html', data)
+
+    
 
 #Nhan Vien
 def list_NhanVien(request):

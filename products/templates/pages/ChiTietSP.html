@@ -69,9 +69,9 @@
       </div>
         <!-- Nút vỏ hàng -->
         <div class="row">
-          <a href="/cart/add/{{SP.id}}" type="button" id="add-to-cart" class="m-3 w-auto btn btn-primary btn-lg btn-shopping-cart">
+          <button type="button" id="add-to-cart" class="m-3 w-auto btn btn-primary btn-lg btn-shopping-cart">
             <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
-          </a>
+          </button>
         </div>
         
         <!-- //THÔNG TIN nhà cùng cấp  -->
@@ -84,28 +84,54 @@
 {% endblock%}
 {% block libraryJS %}
 <script type="text/javascript">
-    $(document).ready(function() {
-      // $('.quantity-input').on('change', function() {
-        $('#add-to-cart').on('click', function() {
-          var quantity = $('.quantity-input').val();
-          var productId = $('.quantity-input').data('product-id');
+    // $(document).ready(function() {
+    //     $('#add-to-cart').on('click', function() {
+    //       var quantity = $('.quantity-input').val();
+    //       var productId = $('.quantity-input').data('product-id');
           
-          $.ajax({
-              url: '/cart/add/${productId}/',
-              type: 'POST',
-              data: {
-                  'quantity': quantity,
-                  'csrfmiddlewaretoken': '{{ csrf_token }}'
-              },
-              success: function(response) {
-                  console.log('Updated successfully:', response);
-              },
-              error: function(xhr, status, error) {
-                  // Handle error
-                  console.error('Error updating ...:', status, error);
-              }
-            });
+    //       $.ajax({
+    //           url: '/cart/add/{{SP.id}}/',
+    //           type: 'POST',
+    //           data: {
+    //               'quantity': quantity,
+    //               'csrfmiddlewaretoken': '{{ csrf_token }}'
+    //           },
+    //           success: function(response) {
+    //               console.log('Updated successfully:', response);
+    //           },
+    //           error: function(xhr, status, error) {
+    //               console.error('Error updating ...:', status, error);
+    //           }
+    //         });
+    //     });
+    // });
+    $(document).ready(function() {
+    $('#add-to-cart').on('click', function() {
+        var quantity = $('.quantity-input').val();
+        var productId = '{{ SP.id }}'; // Get product ID from template context
+        console.log(quantity)
+        console.log(productId)
+        $.ajax({
+            url: '/cart/add/', // URL for the Django view
+            type: 'POST',
+            data: {
+                'product_id': productId, // Pass product ID as data
+                'quantity': quantity,
+                'csrfmiddlewaretoken': '{{ csrf_token }}' // CSRF token for security
+            },
+            success: function(response) {
+                console.log('Updated successfully:', response);
+                window.location.href = '/cart'
+            },
+            error: function(xhr, status, error) {
+                console.error('Error updating:', status, error);
+                if (status=400) {
+                  window.location.href = '/account/login'
+                }
+            }
         });
     });
+});
+
 </script>
 {% endblock %}

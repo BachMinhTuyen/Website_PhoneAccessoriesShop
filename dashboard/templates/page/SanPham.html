@@ -5,22 +5,24 @@
     <table class="table my-3">
         <thead>
           <tr>
+            <th>Hình ảnh</th>
             <th>Tên Sản phẩm</th>
             <th>Số lượng</th>
-            <th>Giá nhập</th>
             <th>Giá bán</th>
-            <th>Mô tả</th>
+            <th>Giá nhập</th>
+            <th>Trạng thái</th>
             <th></th>
             </tr>
         </thead>
         <tbody>
             {% for item in DM_SP %}
             <tr>
+            <td><img src="/static/img/{{ item.Anh }}" width="100" ></td>
             <td>{{ item.TenSP }}</td>
             <td>{{ item.Soluong }}</td>
-            <td>{{ item.GiaNhap }}</td>
             <td>{{ item.GiaBan }}</td>
-            <td>{{ item.Mota }}</td>
+            <td>{{ item.GiaNhap }}</td>
+            <td>{{ item.TrangThai }}</td>
             <td>
                 <a href="/dashboard/XemCT_SP/{{item.id}}">Xem chi tiết</a>
                 <a href="/dashboard/Xoa_SP/{{item.id}}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>

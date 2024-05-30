@@ -1,88 +1,110 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from cart.models import Cart, KhachHang, SanPham
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
-
-# def index(request):
-#     products = Product.objects.all()
-#     return render(request, 'shop-cart/index.html', {'products': products})
+from cart.models import Cart
+from products.models import SanPham
+from account.models import KhachHang, HoaDon
+from django.db.models import Sum
 
 def view_cart(request):
-    cart = Cart.objects.all()
+    username = request.session['username']
+    cart = Cart.objects.filter(UserName__UserName=username)
     data = {
         'cart': cart,
     }
     return render(request, 'shop-cart/cart.html', data)
 
-# def add_to_cart(request, product_id):
-#    product = get_object_or_404(Product, id=product_id)
-#    cart_item, created = Cart.objects.get_or_create(product=product)
-#    if not created:
-#        cart_item.quantity += 1
-#        cart_item.save()
-#     return redirect('view_cart')
+def add_to_cart(request):
+    if request.method == "POST":
+        try:
+            product_id = int(request.POST.get('product_id'))
+            product = SanPham.objects.get(id = product_id)
+            username = request.session['username']
+            khachHang = KhachHang.objects.get(UserName=username)
+            if 'username' not in request.session:
+                return JsonResponse({'error': f"{username} not logged in"}, status=400)
+            else:
+                soLuong = int(request.POST.get('quantity'))
+                thanhTien = soLuong * product.GiaBan
+                cart = Cart.objects.filter(UserName=khachHang, ProductId=product).first()
+                if not cart:
+                    cart = Cart(
+                            ProductId = product,
+                            UserName = khachHang,
+                            SoLuong = soLuong,
+                            ThanhTien = thanhTien,
+                        )
+                    cart.save()
+                if cart:
+                    soLuongDB = cart.SoLuong
+                    SL = soLuongDB + soLuong
+                    cart.SoLuong = SL
+                    cart.save()
+                return JsonResponse({'success': 'Product added to cart'})
+        except SanPham.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=404)
+        except Exception as e:
+            print("Error:", e)
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 def remove_from_cart(request, id):
-    cart_item = get_object_or_404(Cart, product_id=id)
-    cart_item.delete()
+    product = SanPham.objects.get(id = id)
+    username = request.session['username']
+    khachHang = KhachHang.objects.get(UserName=username)
+
+    Cart.objects.filter(UserName=khachHang, ProductId=product).delete()
     return redirect('view_cart')
 
+
 def checkout(request):
-    cart = Cart.objects.all()
-    total = sum(item.product.price * item.quantity for item in cart)
-    return render(request, 'shop-cart/checkout.html', {'cart': cart, 'total': total})
+    # Kiểm tra xem phiên có tồn tại và lấy tên người dùng từ phiên
+    if 'username' in request.session:
+        username = request.session['username']
+        # Lấy tổng của tất cả các giá trị ThanhTien trong bảng Cart dựa trên UserName
+        total = Cart.objects.filter(UserName__UserName=username).aggregate(Sum('ThanhTien'))['ThanhTien__sum']
+       # Lấy tất cả các ProductId từ các đối tượng Cart
+        product_ids_in_cart = Cart.objects.values_list('ProductId', flat=True)
+        cart= Cart.objects.filter(UserName__UserName=username)
+
+        # Lấy tất cả các sản phẩm từ bảng SanPham có ProductId nằm trong danh sách product_ids_in_cart
+        products_in_cart = SanPham.objects.filter(id__in=product_ids_in_cart)
+
+        # Hiển thị các sản phẩm
+       
+
+
+        # Nếu không có giá trị nào, tổng sẽ là 0
+        if total is None:
+            total = 0
+    else:
+        # Nếu không có phiên hoặc không có tên người dùng trong phiên, gán tổng là 0
+        total = 0
+    
+    return render(request, 'shop-cart/checkout.html', {'total': total, 'products': products_in_cart, 'cart': cart})
+
 
 def process_order(request):
     if request.method == 'POST':
-        # Lấy thông tin từ form
+        # Lấy dữ liệu từ request.POST
         full_name = request.POST.get('full_name')
         address = request.POST.get('address')
         phone = request.POST.get('phone')
         email = request.POST.get('email')
         shipping_method = request.POST.get('shipping_method')
         payment_method = request.POST.get('payment_method')
-         # Tạo đơn hàng mới
-        order = Order.objects.create(
-            full_name=full_name,
-            address=address,
-            phone=phone,
-            email=email,
-            shipping_method=shipping_method,
-            payment_method=payment_method
+
+
+        hoadon = HoaDon.objects.create(
+            MaKH=request.user, 
+            TongTien=0,  
+            PhuongThucVanChuyen=shipping_method,
+            PhuongThucThanhToan=payment_method,
+            GhiChu="",
+
         )
-         # Lưu các sản phẩm từ giỏ hàng vào đơn hàng
-        cart_items = Cart.objects.all()
-        for item in cart_items:
-            order.order_items.create(
-                product=item.product,
-                quantity=item.quantity,
-                price=item.product.price
-            )
-         # Xóa giỏ hàng sau khi đã đặt hàng
-        Cart.objects.all().delete()
-         # Hiển thị thông báo thành công
-        messages.success(request, 'Đơn hàng đã được đặt thành công!')
-         # Chuyển hướng người dùng đến trang cảm ơn hoặc trang chủ
-        return redirect('thank_you_page')  # Thay 'thank_you_page' bằng tên đường dẫn tới trang cảm ơn
+      
+        return redirect('checkout')  
 
-#     # Nếu không phải phương thức POST, chuyển hướng về trang checkout
-#     return redirect('checkout')
-
-
-def add_to_cart(request, id):
-    product = SanPham.objects.get(id = id)
-    username = request.session['username']
-    cart = Cart.objects.create(
-        UserName = username,
-        ProductId = id,
-        SoLuong = request.POST['quantity'],
-        ThanhTien = request.POST['quantity'] * product.GiaBan,
-    )
-    # khachhang = get_object_or_404(KhachHang, pk=khachhang_id)
-    # sanpham = get_object_or_404(SanPham, pk=sanpham_id)
-    # cart, created = Cart.objects.get_or_create(UserName=khachhang)
-    # cart.ProductId.add(sanpham)
-    # return JsonResponse({'status': 'success'})
-    cart.save()
-    return redirect('view_cart')
-
+    
+    return redirect('checkout')  
 
