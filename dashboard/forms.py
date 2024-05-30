@@ -41,7 +41,6 @@ class NhaCungCapForm(forms.ModelForm):
             return TenNCC
 
 
-
             
         
 class ThemSanPhamForm(forms.ModelForm):

@@ -20,8 +20,8 @@
             <td>{{ item.TrangThai }}</td>
             <td>{{ item.TongTien }}</td>
             <td>
-                <a href="#">Xem chi tiết</a>
-                <a href="#" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
+                <a href="/dashboard/XemCTPN/{{item.id}}">Xem chi tiết</a>
+                <a href="/dashboard/Xoa_PN/{{item.id}}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
                 <a href="#">Sửa</a>
             </td>
             </tr>

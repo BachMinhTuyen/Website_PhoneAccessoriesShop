@@ -20,10 +20,15 @@ urlpatterns = [
     path('XemCT_SP/<int:sp_id>/', views.XemCT_SP, name='Xem_SP'),
     
     path('HoaDon', views.list_HoaDon, name='HoaDon'),
-    path('XemCT_HD/<int:MaHD>/', views.list_HoaDon, name='Xem_HoaDon'),
+    path('XemCT_HD/<int:MaHD>/', views.XemCT_HD, name='Xem_HoaDon'),
+    path('list_HoaDon/', views.list_HoaDon, name='list_HoaDon'),
+    path('Huy_HoaDon/', views.Huy_HoaDon, name='Huy_HoaDon'),
 
     path('Phieu_Nhap', views.list_PhieuNhap, name='Phieu_Nhap'),
     path('LapPhieuNhap', views.LapPhieuNhap, name='LapPhieuNhap'),
+    path('XemCTPN/<int:MaPhieuNhap>/', views.XemCTPN, name='Xem_PhieuNhap'),
+    path('Xoa_PN/<int:id>/', views.Xoa_PN, name='Xoa_PN'),
+    
     
     path('NhanVien', views.list_NhanVien, name='NhanVien'),
     path('KhachHang', views.list_KhachHang, name='KhachHang'),

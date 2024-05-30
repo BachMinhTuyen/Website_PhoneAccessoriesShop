@@ -26,18 +26,52 @@
 		</div>
 		<div class="col-9">
 			<h2>Thông tin chi tiết đơn hàng</h2>
+			{% load humanize %}
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item">Ngày đặt hàng: <span class="text-primary">2024-05-18</span></li>
-				<li class="list-group-item">Phí vận chuyển: <span class="text-primary">15000</span></li>
+				<li class="list-group-item">Ngày đặt hàng: <span class="text-primary">{{ hoaDon.NgayLap }}</span></li>
+				<li class="list-group-item">Phí vận chuyển: <span class="text-primary">{{ hoaDon.TongTien|floatformat:"0"|intcomma }}</span></li>
+				
+				{% if hoaDon.PhuongThucVanChuyen == 'express'%}
 				<li class="list-group-item">
-					Phương thức vận chuyển: <span class="text-primary">Giao hàng nhanh</span>
+					Phương thức vận chuyển: <span class="text-primary">Giao hoả tốc</span>
 				</li>
+				{% elif hoaDon.PhuongThucVanChuyen == 'fast'%}
 				<li class="list-group-item">
-					Phương thức thanh toán: <span class="text-primary">Tiền mặt</span>
+					Phương thức vận chuyển: <span class="text-primary">Giao nhanh</span>
 				</li>
+				{% elif hoaDon.PhuongThucVanChuyen == 'economic'%}
+				<li class="list-group-item">
+					Phương thức vận chuyển: <span class="text-primary">Giao tiết kiệm</span>
+				</li>
+				{% endif %}
+
+				{% if hoaDon.PhuongThucThanhToan == 'ship_cod'%}
+				<li class="list-group-item">
+					Phương thức vận chuyển: <span class="text-primary">Ship COD</span>
+				</li>
+				{% elif hoaDon.PhuongThucThanhToan == 'online_payment'%} -->
+				<li class="list-group-item">
+					Phương thức vận chuyển: <span class="text-primary">Thanh toán trực tuyến</span>
+				</li>
+				{% endif %}
+
+				{% if hoaDon.TrangThai == 'pending'%}
 				<li class="list-group-item">
 					Trạng thái: <span class="text-danger fw-bold">Chờ xác nhận</span>
 				</li>
+				{% elif hoaDon.TrangThai == 'processing'%}
+				<li class="list-group-item">
+					Trạng thái: <span class="text-danger fw-bold">Chờ giao hàng</span>
+				</li>
+				{% elif hoaDon.TrangThai == 'completed'%}
+				<li class="list-group-item">
+					Trạng thái: <span class="text-danger fw-bold">Đã nhận hàng</span>
+				</li>
+				{% elif hoaDon.TrangThai == 'cancel'%}
+				<li class="list-group-item">
+					Trạng thái: <span class="text-danger fw-bold">Đã hủy</span>
+				</li>
+				{% endif %}
 			</ul>
 
 			<table class="table table-striped">
@@ -51,40 +85,24 @@
 					</tr>
 				</thead>
 				<tbody>
+					{% load humanize %}
+					{% for chiTiet in chiTietHD %}
 					<tr>
 						<td>
 							{% load static %}
 							<img
 								class="d-flex m-auto"
 								width="100"
-								src="{% static '/img/usb-kingston-datatraveler-exodia.png' %}"
-								alt="usb-kingston-datatraveler-exodia.png"
+								src="{% static '/img/' %}{{ chiTiet.MaSP.Anh }}"
+								alt="{{ chiTiet.MaSP.Anh }}"
 							/>
 						</td>
-						<td>USB 3.2 Kingston DataTraveler Exodia DTX 64GB</td>
-						<td>65000</td>
-						<td>2</td>
-						<td>130000</td>
+						<td>{{ chiTiet.MaSP.TenSP }}</td>
+						<td>{{ chiTiet.MaSP.GiaBan|floatformat:"0"|intcomma }}</td>
+						<td>{{ chiTiet.SoLuong }}</td>
+						<td>{{ chiTiet.ThanhTien|floatformat:"0"|intcomma }}</td>
 					</tr>
-					<tr>
-						<td>
-							{% load static %}
-							<img
-								class="d-flex m-auto"
-								width="100"
-								src="{% static '/img/the-nho-sdhc-sandisk-32gb-class.png' %}"
-								alt="the-nho-sdhc-sandisk-32gb-class"
-							/>
-						</td>
-						<td>Thẻ nhớ SDHC SanDisk 32Gb Class 10 100MB/s</td>
-						<td>36000</td>
-						<td>1</td>
-						<td>36000</td>
-					</tr>
-					<tr class="table-secondary">
-						<td colspan="4" class="text-end fw-bolder">Tổng tiền:</td>
-						<td>166000</td>
-					</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 			<div class="m-3">

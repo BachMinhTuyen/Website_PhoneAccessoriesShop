@@ -5,12 +5,15 @@
 {% endblock %}
 {% block content %}
 <div class="col-9 my-3">
-    {% for item in DM_XemCT_HD %}
-    <p>MaHD: {{ item.MaHD }}</p>
+    {% for item in DM_XemCTPN %}
+    <p>MaCTPN: {{ item.MaCTPN }}</p>
+    <p>MaPhieuNhap: {{ item.MaPhieuNhap }}</p>
+    <p> MaSP: {{ item.MaSP }}</p>
+    <p>MaNCC: {{ item.MaNCC }}</p>
     <p>SoLuong: {{ item.SoLuong }}</p>
-    <p>ThanhTien: {{ item.ThanhTien }}</p>
-    <p>MaSP: {{ item.MaSP }}</p>
+    <p> GiaNhap: {{ item.GiaNhap }}</p>
 {% endfor %}
    
 </div>
 {% endblock %}
+    

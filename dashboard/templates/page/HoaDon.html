@@ -5,11 +5,16 @@
     <table class="table my-3">
         <thead>
           <tr>
-            <th>Mã hóa đơn</th>
-            <th>Ngày Lập</th>
-            <th>Tổng Tiền</th>
-            <th>Mã khách hàng</th>
-            <th></th>
+            <th>MaHD</th>
+            <th>NgayLap</th>
+            <th>TongTien</th>
+            <th>PhuongThucVanChuyen</th>
+            <th>PhiVanChuyen</th>
+            <th>TrangThai</th>
+            <th>PhuongThucThanhToan</th>
+            <th>GhiChu</th>
+            <th>MaKH</th>
+            <th></th><th></th><th></th><th></th>
             </tr>
         </thead>
         <tbody>
@@ -18,9 +23,29 @@
             <td>{{ item.MaHD }}</td>
             <td>{{ item.NgayLap }}</td>
             <td>{{ item.TongTien }}</td>
+            <td>{{ item.PhuongThucVanChuyen }}</td>
+            <td>{{ item.PhiVanChuyen }}</td>
+            <td>
+                {{ item.TrangThai }}
+            </td>
+            <td>{{ item.PhuongThucThanhToan }}</td>
+            <td>{{ item.GhiChu }}</td>
             <td>{{ item.MaKH}}</td>
             <td>
                 <a href="/dashboard/XemCT_HD/{{item.MaHD}}">Xem chi tiết</a>
+            </td>
+            <td><form method="POST" action="{% url 'list_HoaDon' %}">
+                {% csrf_token %}
+                <input type="hidden" name="ma_hd" value="{{ item.MaHD }}">
+                <button type="submit">Xác nhận</button>
+            </form>
+            </td>
+            <td> 
+                <td><form method="POST" action="{% url 'Huy_HoaDon' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="ma_hd" value="{{ item.MaHD }}">
+                    <button type="submit">Hủy </button>
+                </form> </td>
             </td>
             </tr>
             {% endfor %}

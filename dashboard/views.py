@@ -1,7 +1,7 @@
 from pyexpat.errors import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from account.models import HoaDon, KhachHang, NhanVien
+from account.models import ChiTietHD, HoaDon, KhachHang, NhanVien
 from dashboard.forms import ChiTietPhieuNhapForm, ChiTietPhieuNhapFormSet, PhieuNhapForm, SuaSanPhamForm, TheLoaiForm, NhaCungCapForm, ThemSanPhamForm
 from dashboard.models import PhieuNhap,ChiTietPhieuNhap
 from products.models import NhaCungCap, LoaiSP, SanPham
@@ -88,10 +88,10 @@ def Sua_NCC(request, ncc_id):
 
 #Sản Phẩm
 def list_SanPham(request):
-   data = {
-   'DM_SP': SanPham.objects.all(), 
-   }
-   return render(request, 'page/SanPham.html', data)
+    data = {
+    'DM_SP': SanPham.objects.all(), 
+    }
+    return render(request, 'page/SanPham.html', data)
 
 def Them_SanPham(request):
     if request.method == 'POST':
@@ -104,7 +104,7 @@ def Them_SanPham(request):
             san_pham.GiaBan = 0
             san_pham.save()
             return HttpResponseRedirect('/dashboard/SanPham')  
-           
+        
     else:
         form = ThemSanPhamForm()
 
@@ -140,15 +140,31 @@ def XemCT_SP(request, sp_id):
 
 #HoaDon
 def list_HoaDon(request):
+    if request.method == 'POST':
+        ma_hd = request.POST.get('ma_hd')  
+        hoa_don = HoaDon.objects.get(MaHD=ma_hd)  
+        hoa_don.TrangThai = 'Đang Giao Hàng'  
+        hoa_don.save()  
     data = {
-        'DM_HD':HoaDon.objects.all(),
+        'DM_HD': HoaDon.objects.all(),
     }
     return render(request, 'page/HoaDon.html', data)
 
+def Huy_HoaDon(request):
+    if request.method == 'POST':
+        ma_hd = request.POST.get('ma_hd')  
+        hoa_don = HoaDon.objects.get(MaHD=ma_hd)  
+        hoa_don.TrangThai = 'Đã Hủy'  
+        hoa_don.save()  
+    data = {
+        'DM_HD': HoaDon.objects.all(),
+    }
+    return render(request, 'page/HoaDon.html', data)
 
 def XemCT_HD(request, MaHD):
+    hd = ChiTietHD.objects.filter(MaHD=MaHD)
     data = {
-        'DM_XemCT_HD': HoaDon.objects.get(MaHD=MaHD),
+        'DM_XemCT_HD': hd,
     }
     return render(request, 'page/XemCT_HD.html', data)
 
@@ -199,10 +215,22 @@ def LapPhieuNhap(request):
         'formset': formset,
     })
 
+#xem chi tiết phiếu nhập 
+def XemCTPN(request, MaPhieuNhap):
+    pn = ChiTietPhieuNhap.objects.filter( MaPhieuNhap=MaPhieuNhap)
+    data = {
+        'DM_XemCTPN': pn,
+    }
+    return render(request, 'page/XemCTPN.html', data)
 
+#xóa phiếu nhập
+def Xoa_PN(request, id):
+    pn = PhieuNhap.objects.get(id=id)
+    pn.delete()
+    return HttpResponseRedirect('/dashboard/Phieu_Nhap')
 
     
-
+    
 #Nhan Vien
 def list_NhanVien(request):
     data = {

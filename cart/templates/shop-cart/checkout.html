@@ -10,28 +10,28 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="full_name">Họ và tên:</label>
-                <input type="text" class="form-control" id="full_name" name="full_name" required>
+                <input type="text" class="form-control" id="full_name" name="full_name" value="{{kh.TenKH}}" required>
             </div>
             <div class="form-group">
                 <label for="address">Địa chỉ:</label>
-                <input type="text" class="form-control" id="address" name="address" required>
+                <input type="text" class="form-control" id="address" name="address" value="{{kh.DiaChi}}" required>
             </div>
             <div class="form-group">
                 <label for="phone">Số điện thoại:</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required>
+                <input type="tel" class="form-control" id="phone" name="phone" value="{{kh.SoDT}}" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" value="{{kh.Email}}" required>
             </div>
             <div class="form-group">
                 <label>Phương thức vận chuyển:</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shipping_method" id="express" value="express" checked>
+                    <input class="form-check-input" type="radio" name="shipping_method" id="express" value="express">
                     <label class="form-check-label" for="express">Giao hoả tốc</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shipping_method" id="fast" value="fast">
+                    <input class="form-check-input" type="radio" name="shipping_method" id="fast" value="fast" checked>
                     <label class="form-check-label" for="fast">Giao nhanh</label>
                 </div>
                 <div class="form-check">
@@ -50,6 +50,7 @@
                     <label class="form-check-label" for="online_payment">Thanh toán trực tuyến</label>
                 </div>
             </div>
+            <input type="hidden" name="total" value="{{ total }}">
             <button type="submit" class="btn btn-primary">Thanh toán</button>
         </form>
     </div>
@@ -64,9 +65,21 @@
                     <th>Tổng</th>
                 </tr>
             </thead>
-            
-            
-            
+            <body>
+                {% load humanize %}
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.ProductId.TenSP }}</td>
+                    <td>{{ item.ProductId.GiaBan|floatformat:"0"|intcomma }}</td>
+                    <td>{{ item.SoLuong }}</td>
+                    <td>{{ item.ThanhTien|floatformat:"0"|intcomma }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="table-secondary">
+                    <td colspan="3" class="text-end fw-bolder">Tổng tiền:</td>
+                    <td class="text-danger fw-bold">{{ total|floatformat:"0"|intcomma }}</td>
+                </tr>
+            </body>
         </table>
     </div>
 </div>
