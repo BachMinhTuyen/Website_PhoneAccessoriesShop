@@ -29,7 +29,8 @@
 			{% load humanize %}
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">Ngày đặt hàng: <span class="text-primary">{{ hoaDon.NgayLap }}</span></li>
-				<li class="list-group-item">Phí vận chuyển: <span class="text-primary">{{ hoaDon.TongTien|floatformat:"0"|intcomma }}</span></li>
+				<li class="list-group-item">Phí vận chuyển: <span class="text-primary">{{ hoaDon.PhiVanChuyen|floatformat:"0"|intcomma }}</span></li>
+				<li class="list-group-item fw-bold">Tổng tiền: <span class="text-primary">{{ hoaDon.TongTien|floatformat:"0"|intcomma }}</span></li>
 				
 				{% if hoaDon.PhuongThucVanChuyen == 'express'%}
 				<li class="list-group-item">
@@ -47,11 +48,11 @@
 
 				{% if hoaDon.PhuongThucThanhToan == 'ship_cod'%}
 				<li class="list-group-item">
-					Phương thức vận chuyển: <span class="text-primary">Ship COD</span>
+					Phương thức thanh toán: <span class="text-primary">Ship COD</span>
 				</li>
 				{% elif hoaDon.PhuongThucThanhToan == 'online_payment'%} -->
 				<li class="list-group-item">
-					Phương thức vận chuyển: <span class="text-primary">Thanh toán trực tuyến</span>
+					Phương thức thanh toán: <span class="text-primary">Thanh toán trực tuyến</span>
 				</li>
 				{% endif %}
 
@@ -105,6 +106,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			{% if hoaDon.TrangThai != 'cancel'%}
 			<div class="m-3">
 				<button
 					type="button"
@@ -113,7 +115,8 @@
 					data-bs-target="#cancelOrder"
 				>
 					Hủy đơn hàng
-				</button>
+			</button>
+			{% endif %}
 			</div>
 		</div>
 	</div>
@@ -142,7 +145,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-					<button type="button" class="btn btn-primary">Tôi chắc chắn</button>
+					<a href="/user/cancelOrder/{{maHD}} " type="button" class="btn btn-primary">Tôi chắc chắn</a>
 				</div>
 			</div>
 		</div>

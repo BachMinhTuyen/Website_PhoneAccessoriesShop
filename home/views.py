@@ -15,3 +15,4 @@ def aboutus(request):
 
 def contact(request):
     return render(request, 'page/contact.html')
+

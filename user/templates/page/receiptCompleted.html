@@ -46,22 +46,26 @@
 					</tr>
 				</thead>
 				<tbody>
+					{% for hoaDon in hoaDonLST %}
 					<tr>
-						<td>2024-05-18</td>
-						<td>123456</td>
+						<td>{{ hoaDon.NgayLap}}</td>
+						<td>{{ hoaDon.MaHD }}</td>
 						<td>
 							<ul class="list-group">
-								<li class="list-group-item border-0">
-									USB 3.2 Kingston DataTraveler Exodia DTX 64GB
-								</li>
-								<li class="list-group-item border-0">Thẻ nhớ SDHC SanDisk 32Gb Class 10 100MB/s</li>
+								{% for chiTiet in chiTietHD %}
+									{% if chiTiet.MaHD == hoaDon %}
+								<li class="list-group-item border-0">{{ chiTiet.MaSP.TenSP }}</li>
+									{% endif %}
+								{% endfor %}
 							</ul>
 						</td>
-						<td>65000</td>
+						{% load humanize %}
+						<td>{{ hoaDon.TongTien|floatformat:"0"|intcomma }}</td>
 						<td>
-							<a class="btn btn-primary" href="/user/receiptdetails/">Xem chi tiết</a>
+							<a class="btn btn-primary" href="/user/receiptdetails/{{ hoaDon.MaHD }}">Xem chi tiết</a>
 						</td>
 					</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>

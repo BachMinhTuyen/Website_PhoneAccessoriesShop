@@ -5,12 +5,86 @@
 {% endblock %}
 {% block content %}
 <div class="col-9 my-3">
-    {% for item in DM_XemCT_HD %}
-    <p>MaHD: {{ item.MaHD }}</p>
-    <p>SoLuong: {{ item.SoLuong }}</p>
-    <p>ThanhTien: {{ item.ThanhTien }}</p>
-    <p>MaSP: {{ item.MaSP }}</p>
-{% endfor %}
+    {% load humanize %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Ngày đặt hàng: <span class="text-primary">{{ hoaDon.NgayLap }}</span></li>
+        <li class="list-group-item">Phí vận chuyển: <span class="text-primary">{{ hoaDon.TongTien|floatformat:"0"|intcomma }}</span></li>
+        
+        {% if hoaDon.PhuongThucVanChuyen == 'express'%}
+        <li class="list-group-item">
+            Phương thức vận chuyển: <span class="text-primary">Giao hoả tốc</span>
+        </li>
+        {% elif hoaDon.PhuongThucVanChuyen == 'fast'%}
+        <li class="list-group-item">
+            Phương thức vận chuyển: <span class="text-primary">Giao nhanh</span>
+        </li>
+        {% elif hoaDon.PhuongThucVanChuyen == 'economic'%}
+        <li class="list-group-item">
+            Phương thức vận chuyển: <span class="text-primary">Giao tiết kiệm</span>
+        </li>
+        {% endif %}
+
+        {% if hoaDon.PhuongThucThanhToan == 'ship_cod'%}
+        <li class="list-group-item">
+            Phương thức thanh toán: <span class="text-primary">Ship COD</span>
+        </li>
+        {% elif hoaDon.PhuongThucThanhToan == 'online_payment'%}
+        <li class="list-group-item">
+            Phương thức thanh toán: <span class="text-primary">Thanh toán trực tuyến</span>
+        </li>
+        {% endif %}
+
+        {% if hoaDon.TrangThai == 'pending'%}
+        <li class="list-group-item">
+            Trạng thái: <span class="text-danger fw-bold">Chờ xác nhận</span>
+        </li>
+        {% elif hoaDon.TrangThai == 'processing'%}
+        <li class="list-group-item">
+            Trạng thái: <span class="text-danger fw-bold">Chờ giao hàng</span>
+        </li>
+        {% elif hoaDon.TrangThai == 'completed'%}
+        <li class="list-group-item">
+            Trạng thái: <span class="text-danger fw-bold">Đã nhận hàng</span>
+        </li>
+        {% elif hoaDon.TrangThai == 'cancel'%}
+        <li class="list-group-item">
+            Trạng thái: <span class="text-danger fw-bold">Đã hủy</span>
+        </li>
+        {% endif %}
+    </ul>
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-success">
+                <th scope="col" class="text-center text-capitalize">Hình ảnh</th>
+                <th scope="col" class="text-center text-capitalize">Tên sản phẩm</th>
+                <th scope="col" class="text-center text-capitalize">Đơn giá</th>
+                <th scope="col" class="text-center text-capitalize">Số lượng</th>
+                <th scope="col" class="text-center text-capitalize">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% load humanize %}
+            {% for chiTiet in chiTietHD %}
+            <tr>
+                <td>
+                    {% load static %}
+                    <img
+                        class="d-flex m-auto"
+                        width="100"
+                        src="{% static '/img/' %}{{ chiTiet.MaSP.Anh }}"
+                        alt="{{ chiTiet.MaSP.Anh }}"
+                    />
+                </td>
+                <td>{{ chiTiet.MaSP.TenSP }}</td>
+                <td>{{ chiTiet.MaSP.GiaBan|floatformat:"0"|intcomma }}</td>
+                <td>{{ chiTiet.SoLuong }}</td>
+                <td>{{ chiTiet.ThanhTien|floatformat:"0"|intcomma }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
    
+
 </div>
 {% endblock %}

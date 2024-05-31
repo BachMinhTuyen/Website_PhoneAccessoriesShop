@@ -7,4 +7,6 @@ urlpatterns = [
     path('updatePassword/',views.updatePassword, name='updatePassword'),
     path('receipt/', views.receipt, name='receipt'),
     path('receiptdetails/<int:MaHD>', views.receiptdetails, name='receiptdetails'),
+    path('cancelOrder/<int:MaHD>', views.cancelOrder, name='cancelOrder'),
+    path('receivedOrder/<int:MaHD>', views.receivedOrder, name='receivedOrder'),
 ]

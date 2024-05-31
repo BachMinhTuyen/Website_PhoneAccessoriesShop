@@ -34,11 +34,14 @@ def add_to_cart(request):
                             SoLuong = soLuong,
                             ThanhTien = thanhTien,
                         )
+                    # return JsonResponse({'success': f"Product added {cart.SoLuong} to cart - {soLuong}*{product.GiaBan}={thanhTien}"})
                     cart.save()
-                if cart:
+                # if cart:
+                else:
                     soLuongDB = cart.SoLuong
                     SL = soLuongDB + soLuong
                     cart.SoLuong = SL
+                    cart.ThanhTien = SL * product.GiaBan
                     cart.save()
                 return JsonResponse({'success': 'Product added to cart'})
         except SanPham.DoesNotExist:
@@ -127,6 +130,9 @@ def process_order(request):
                 ThanhTien = item.ThanhTien,
             )
             chiTietHoaDon.save()
+
+        # xóa thông tin giỏ hàng của session user này
+        cart_items.delete()
 
         return redirect('receipt')  
     return redirect('checkout')  

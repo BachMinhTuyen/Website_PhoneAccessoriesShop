@@ -84,27 +84,6 @@
 {% endblock%}
 {% block libraryJS %}
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //     $('#add-to-cart').on('click', function() {
-    //       var quantity = $('.quantity-input').val();
-    //       var productId = $('.quantity-input').data('product-id');
-          
-    //       $.ajax({
-    //           url: '/cart/add/{{SP.id}}/',
-    //           type: 'POST',
-    //           data: {
-    //               'quantity': quantity,
-    //               'csrfmiddlewaretoken': '{{ csrf_token }}'
-    //           },
-    //           success: function(response) {
-    //               console.log('Updated successfully:', response);
-    //           },
-    //           error: function(xhr, status, error) {
-    //               console.error('Error updating ...:', status, error);
-    //           }
-    //         });
-    //     });
-    // });
     $(document).ready(function() {
     $('#add-to-cart').on('click', function() {
         var quantity = $('.quantity-input').val();

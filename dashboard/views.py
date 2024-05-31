@@ -1,6 +1,6 @@
 from pyexpat.errors import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from account.models import ChiTietHD, HoaDon, KhachHang, NhanVien
 from dashboard.forms import ChiTietPhieuNhapForm, ChiTietPhieuNhapFormSet, PhieuNhapForm, SuaSanPhamForm, TheLoaiForm, NhaCungCapForm, ThemSanPhamForm
 from dashboard.models import PhieuNhap,ChiTietPhieuNhap
@@ -88,10 +88,10 @@ def Sua_NCC(request, ncc_id):
 
 #Sản Phẩm
 def list_SanPham(request):
-    data = {
-    'DM_SP': SanPham.objects.all(), 
-    }
-    return render(request, 'page/SanPham.html', data)
+   data = {
+   'DM_SP': SanPham.objects.all(), 
+   }
+   return render(request, 'page/SanPham.html', data)
 
 def Them_SanPham(request):
     if request.method == 'POST':
@@ -104,7 +104,7 @@ def Them_SanPham(request):
             san_pham.GiaBan = 0
             san_pham.save()
             return HttpResponseRedirect('/dashboard/SanPham')  
-        
+           
     else:
         form = ThemSanPhamForm()
 
@@ -140,33 +140,43 @@ def XemCT_SP(request, sp_id):
 
 #HoaDon
 def list_HoaDon(request):
-    if request.method == 'POST':
-        ma_hd = request.POST.get('ma_hd')  
-        hoa_don = HoaDon.objects.get(MaHD=ma_hd)  
-        hoa_don.TrangThai = 'Đang Giao Hàng'  
-        hoa_don.save()  
+    # invoices = HoaDon.objects.filter(MaKH=khachHang)
+    chiTietHD = ChiTietHD.objects.all()
+    invoices = HoaDon.objects.all()
     data = {
-        'DM_HD': HoaDon.objects.all(),
+        'hoaDonLST': invoices,
+        'chiTietHD': chiTietHD,
     }
     return render(request, 'page/HoaDon.html', data)
 
-def Huy_HoaDon(request):
-    if request.method == 'POST':
-        ma_hd = request.POST.get('ma_hd')  
-        hoa_don = HoaDon.objects.get(MaHD=ma_hd)  
-        hoa_don.TrangThai = 'Đã Hủy'  
-        hoa_don.save()  
-    data = {
-        'DM_HD': HoaDon.objects.all(),
-    }
-    return render(request, 'page/HoaDon.html', data)
 
-def XemCT_HD(request, MaHD):
-    hd = ChiTietHD.objects.filter(MaHD=MaHD)
+
+def receiptdetails(request, MaHD):
+    # username = request.session['username']
+    # khachHang = KhachHang.objects.get(UserName=username)
+    hoaDon = HoaDon.objects.filter(MaHD=MaHD).first()
+    chiTietHD = ChiTietHD.objects.filter(MaHD=hoaDon)
     data = {
-        'DM_XemCT_HD': hd,
+        'hoaDon' : hoaDon,
+        'chiTietHD' : chiTietHD,
     }
     return render(request, 'page/XemCT_HD.html', data)
+
+
+def cancelOrder(request, MaHD):
+    hoaDon = HoaDon.objects.filter(MaHD=MaHD).first()
+    hoaDon.TrangThai='cancel'
+    hoaDon.save()
+    return redirect('HoaDon')
+
+
+
+
+def ConfirmOrder(request, MaHD):
+    hoaDon = HoaDon.objects.filter(MaHD=MaHD).first()
+    hoaDon.TrangThai='processing'
+    hoaDon.save()
+    return redirect('HoaDon')
 
 
 #Phiếu nhập
